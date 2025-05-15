@@ -16,10 +16,10 @@ public class ProductVO {
 		this.prod_id = prod_id;
 	}
 	public String getProd() {
-		return prod;
+		return prodName;
 	}
-	public void setProd(String prod) {
-		this.prod = prod;
+	public void setProd(String prodName) {
+		this.prodName = prodName;
 	}
 
 
