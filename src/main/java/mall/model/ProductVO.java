@@ -3,7 +3,7 @@ package mall.model;
 public class ProductVO {
 	
 	private int prod_id ;
-	private String prod;
+	private String prodName;
 	
 	public ProductVO() {
 		super();
