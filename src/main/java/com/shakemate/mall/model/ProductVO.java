@@ -1,9 +1,9 @@
-package mall.model;
+package com.shakemate.mall.model;
 
 public class ProductVO {
 	
 	private int prod_id ;
-	private String prodName;
+	private String prod;
 	
 	public ProductVO() {
 		super();

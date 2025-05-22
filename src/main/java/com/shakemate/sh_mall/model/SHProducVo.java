@@ -1,4 +1,4 @@
-package sh_mall.model;
+package com.shakemate.sh_mall.model;
 
 public class SHProducVo {
 	private int prodID;
