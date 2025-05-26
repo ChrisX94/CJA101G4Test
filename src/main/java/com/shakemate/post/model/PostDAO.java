@@ -15,7 +15,7 @@ public class PostDAO implements PostDAO_interface{
     String driver = "com.mysql.cj.jdbc.Driver";
     String url = "jdbc:mysql://localhost:3306/testshakemate?serverTimezone=Asia/Taipei";
     String userid = "root";
-    String passwd = "hys123456";
+    String passwd = "hsp123456";
 
 
     private static final String INSERT_STMT =
@@ -38,17 +38,17 @@ public class PostDAO implements PostDAO_interface{
 
     @Test
     public void Test() {
-//        PostVO postVO = new PostVO();
-//        postVO.setUserId(1);  // 假設 userId 1 存在
-//        postVO.setPostText("這是一篇測試貼文。");
-//        postVO.setImageUrl("https://example.com/image.jpg"); // 可為 null 或空字串
-//        postVO.setPostTime(Timestamp.valueOf(LocalDateTime.now()));
-//        postVO.setViewerPermission((byte) 0); // 0: 所有人
-//        postVO.setLikesCount(0); // 初始為 0
-//        postVO.setCommentCount(0); // 初始為 0
-//
-//        insert(postVO);
-//        System.out.println("貼文新增成功！");
+        PostVO postVO = new PostVO();
+        postVO.setUserId(1);  // 假設 userId 1 存在
+        postVO.setPostText("這是一篇測試貼文。");
+        postVO.setImageUrl("https://example.com/image.jpg"); // 可為 null 或空字串
+        postVO.setPostTime(Timestamp.valueOf(LocalDateTime.now()));
+        postVO.setViewerPermission((byte) 0); // 0: 所有人
+        postVO.setLikesCount(0); // 初始為 0
+        postVO.setCommentCount(0); // 初始為 0
+
+        insert(postVO);
+        System.out.println("貼文新增成功！");
 
 
 //        PostVO postVO = new PostVO();
@@ -78,11 +78,11 @@ public class PostDAO implements PostDAO_interface{
 //            System.out.println("查無貼文");
 //        }
 
-        List<PostVO> postList = getAll();
-
-        for (PostVO postVO : postList) {
-            System.out.println("ID: " + postVO.getPostId() + ", 發文者: " + postVO.getUserId() + ", 內容: " + postVO.getPostText());
-        }
+//        List<PostVO> postList = getAll();
+//
+//        for (PostVO postVO : postList) {
+//            System.out.println("ID: " + postVO.getPostId() + ", 發文者: " + postVO.getUserId() + ", 內容: " + postVO.getPostText());
+//        }
 
 
     }
