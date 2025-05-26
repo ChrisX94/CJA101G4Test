@@ -1,57 +1,60 @@
 package com.shakemate.post.model;
 
+import java.sql.Timestamp;
+import java.util.List;
+
 public class PostService {
 
-//    private EmpDAO_interface dao;
-//
-//    public EmpService() {
-//        dao = new EmpDAO();
-//    }
-//
-//    public EmpVO addEmp(String ename, String job, java.sql.Date hiredate,
-//                        Double sal, Double comm, Integer deptno) {
-//
-//        EmpVO empVO = new EmpVO();
-//
-//        empVO.setEname(ename);
-//        empVO.setJob(job);
-//        empVO.setHiredate(hiredate);
-//        empVO.setSal(sal);
-//        empVO.setComm(comm);
-//        empVO.setDeptno(deptno);
-//        dao.insert(empVO);
-//
-//        return empVO;
-//    }
-//
-//    public EmpVO updateEmp(Integer empno, String ename, String job,
-//                           java.sql.Date hiredate, Double sal, Double comm, Integer deptno) {
-//
-//        EmpVO empVO = new EmpVO();
-//
-//        empVO.setEmpno(empno);
-//        empVO.setEname(ename);
-//        empVO.setJob(job);
-//        empVO.setHiredate(hiredate);
-//        empVO.setSal(sal);
-//        empVO.setComm(comm);
-//        empVO.setDeptno(deptno);
-//        dao.update(empVO);
-//
-//        return empVO;
-//    }
-//
-//    public void deleteEmp(Integer empno) {
-//        dao.delete(empno);
-//    }
-//
-//    public EmpVO getOneEmp(Integer empno) {
-//        return dao.findByPrimaryKey(empno);
-//    }
-//
-//    public List<EmpVO> getAll() {
-//        return dao.getAll();
-//    }
+    private PostDAO_interface dao;
+
+    public PostService() {
+        dao = new PostDAO();
+    }
+
+    public PostVO addPost(Integer userId, String postText, String imageUrl,
+                          Timestamp postTime, Byte viewerPermission) {
+
+        PostVO postVO = new PostVO();
+
+        postVO.setUserId(userId);
+        postVO.setPostText(postText);
+        postVO.setImageUrl(imageUrl);
+        postVO.setPostTime(postTime);
+        postVO.setViewerPermission(viewerPermission);
+        postVO.setLikesCount(0);     // 初始值
+        postVO.setCommentCount(0);   // 初始值
+
+        dao.insert(postVO);
+
+        return postVO;
+    }
+
+    public PostVO updatePost(Integer postId, String postText, String imageUrl,
+                             Byte viewerPermission) {
+
+        PostVO postVO = new PostVO();
+
+        postVO.setPostId(postId);
+        postVO.setPostText(postText);
+        postVO.setImageUrl(imageUrl);
+        postVO.setViewerPermission(viewerPermission);
+
+        dao.update(postVO);
+
+        return postVO;
+    }
+
+    public void deletePost(Integer postId) {
+        dao.delete(postId);
+    }
+
+    public PostVO getOnePost(Integer postId) {
+        return dao.findByPrimaryKey(postId);
+    }
+
+    public List<PostVO> getAll() {
+        return dao.getAll();
+    }
 
     
 }

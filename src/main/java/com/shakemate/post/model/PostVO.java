@@ -16,6 +16,17 @@ public class PostVO {
     public PostVO() {
     }
 
+    public PostVO(Integer postId, Integer userId, String postText, String imageUrl, Timestamp postTime, Byte viewerPermission, Integer likesCount, Integer commentCount) {
+        this.postId = postId;
+        this.userId = userId;
+        this.postText = postText;
+        this.imageUrl = imageUrl;
+        this.postTime = postTime;
+        this.viewerPermission = viewerPermission;
+        this.likesCount = likesCount;
+        this.commentCount = commentCount;
+    }
+
     public PostVO(Integer userId, String postText, String imageUrl, Timestamp postTime, Byte viewerPermission, Integer likesCount, Integer commentCount) {
         this.userId = userId;
         this.postText = postText;
