@@ -15,7 +15,7 @@ public class PostDAO implements PostDAO_interface{
     String driver = "com.mysql.cj.jdbc.Driver";
     String url = "jdbc:mysql://localhost:3306/testshakemate?serverTimezone=Asia/Taipei";
     String userid = "root";
-    String passwd = "hsp123456";
+    String passwd = "hys123456";
 
 
     private static final String INSERT_STMT =

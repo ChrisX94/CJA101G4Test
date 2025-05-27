@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%
-    PostVO postVO = (PostVO) request.getAttribute("postVO"); // 從req拿屬性，存了一個postVO
+    PostVO postVO = (PostVO) request.getAttribute("post"); // 從req拿屬性，存了一個postVO
 %>
 
 <html>

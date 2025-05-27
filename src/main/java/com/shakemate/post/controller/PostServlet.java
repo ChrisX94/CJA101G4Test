@@ -142,7 +142,7 @@ public class PostServlet extends HttpServlet {
 
 
         if (!errors.isEmpty()) {
-            req.setAttribute("postVO", postVO);
+            req.setAttribute("post", postVO);
             RequestDispatcher rd = req.getRequestDispatcher("/post/addPost.jsp");
             rd.forward(req, res);
             return;
@@ -179,16 +179,12 @@ public class PostServlet extends HttpServlet {
             return;
         }
 
-        // 使用URL帶參數，也可改用 setAttribute
-        String param = "?postId=" + postVO.getPostId()
-                + "&userId=" + postVO.getUserId()
-                + "&postText=" + (postVO.getPostText() != null ? postVO.getPostText() : "")
-                + "&imageUrl=" + (postVO.getImageUrl() != null ? postVO.getImageUrl() : "")
-                + "&viewerPermission=" + postVO.getViewerPermission();
-
-        RequestDispatcher rd = req.getRequestDispatcher("/post/updatePost.jsp" + param);
+        // 改成用 request.setAttribute 傳遞 postVO 物件，不用在 URL 帶參數
+        req.setAttribute("post", postVO);
+        RequestDispatcher rd = req.getRequestDispatcher("/post/updatePost.jsp");
         rd.forward(req, res);
     }
+
 
     // 更新貼文
     private void update(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
