@@ -1,16 +1,16 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="com.shakemate.post.controller.*" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="com.shakemate.post.model.PostVO" %>
-<%-- 此頁暫練習採用 Script 的寫法取值 --%>
 
 <%
-    PostVO postVO = (PostVO) request.getAttribute("post"); // PostServlet.java(Controller)，存入req的postVO物件
+    PostVO postVO = (PostVO) request.getAttribute("post");
 %>
 
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>貼文資料 - listOnePost.jsp</title>
-
     <style>
         table#table-1 {
             background-color: #CCCCFF;
@@ -26,28 +26,32 @@
             color: blue;
             display: inline;
         }
-    </style>
-
-    <style>
         table {
-            width: 800px;
+            width: 100%; /* 跟 listAllPost.jsp 一致 */
             background-color: white;
             margin-top: 5px;
             margin-bottom: 5px;
+            /*border-collapse: collapse; !* 讓邊框更緊密 *!*/
         }
         table, th, td {
+            font-size: 12px; /* 一致 */
             border: 1px solid #CCCCFF;
         }
         th, td {
             padding: 5px;
             text-align: center;
+            vertical-align: middle;
+        }
+        /* 讓圖片連結欄可自動換行顯示長網址 */
+        td.image-url {
+            word-break: break-all;
         }
     </style>
-
 </head>
-<body bgcolor='white'>
+<body bgcolor="white">
 
 <h4>此頁暫練習採用 Script 的寫法取值:</h4>
+
 <table id="table-1">
     <tr><td>
         <h3>貼文資料 - listOnePost.jsp</h3>
@@ -70,9 +74,22 @@
         <td><%= postVO.getPostId() %></td>
         <td><%= postVO.getUserId() %></td>
         <td><%= postVO.getPostText() %></td>
-        <td><img src="<%= postVO.getImageUrl() %>" width="100" height="100"></td>
-        <td><%= postVO.getPostTime() %></td>
-        <td><%= postVO.getViewerPermission() %></td>
+        <td class="image-url">
+            <c:if test="${not empty post.imageUrl}">
+                <a href="<%= postVO.getImageUrl() %>" target="_blank">查看圖片</a>
+            </c:if>
+        </td>
+        <td>
+            <fmt:formatDate value="<%= postVO.getPostTime() %>" pattern="yyyy-MM-dd a hh:mm:ss"/>
+        </td>
+        <td>
+            <c:choose>
+                <c:when test="${post.viewerPermission == 0}">所有人</c:when>
+                <c:when test="${post.viewerPermission == 1}">配對成功者</c:when>
+                <c:when test="${post.viewerPermission == 2}">僅限自己</c:when>
+                <c:otherwise>未知</c:otherwise>
+            </c:choose>
+        </td>
         <td><%= postVO.getLikesCount() %></td>
         <td><%= postVO.getCommentCount() %></td>
     </tr>

@@ -29,16 +29,35 @@ public class PostService {
         return postVO;
     }
 
-    public PostVO updatePost(Integer postId, String postText, String imageUrl,
-                             Byte viewerPermission) {
+//    public PostVO updatePost(Integer postId, String postText, String imageUrl,
+//                             Byte viewerPermission) {
+//
+//        PostVO postVO = new PostVO();
+//
+//        postVO.setPostId(postId);
+//        postVO.setPostText(postText);
+//        postVO.setImageUrl(imageUrl);
+//        postVO.setViewerPermission(viewerPermission);
+//
+//        dao.update(postVO);
+//
+//        return postVO;
+//    }
 
-        PostVO postVO = new PostVO();
+    public PostVO updatePost(Integer postId, String postText, String imageUrl, Byte viewerPermission) {
+        // 先查出舊資料
+        PostVO postVO = dao.findByPrimaryKey(postId);
 
-        postVO.setPostId(postId);
+        if (postVO == null) {
+            throw new RuntimeException("找不到要更新的貼文 ID：" + postId);
+        }
+
+        // 設置更新欄位
         postVO.setPostText(postText);
         postVO.setImageUrl(imageUrl);
         postVO.setViewerPermission(viewerPermission);
 
+        // 執行更新
         dao.update(postVO);
 
         return postVO;
@@ -56,5 +75,5 @@ public class PostService {
         return dao.getAll();
     }
 
-    
+
 }

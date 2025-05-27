@@ -1,5 +1,15 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.shakemate.post.model.*"%>
+<%@ page import="java.util.List" %>
+
+<%
+  // 建立 PostService 物件，並呼叫 getAll() 取得貼文列表
+  PostService postSvc = new PostService();
+  List<PostVO> postList = postSvc.getAll();
+  // 放到 pageContext 讓 JSTL EL 可以取得
+  pageContext.setAttribute("postList", postList);
+%>
 
 <html>
 <head>
@@ -37,7 +47,7 @@
 
 <h3>資料查詢:</h3>
 
-<%-- 錯誤表列 --%>
+<!-- 錯誤表列 -->
 <c:if test="${not empty errorMsgs}">
   <font style="color:red">請修正以下錯誤:</font>
   <ul>
@@ -48,43 +58,41 @@
 </c:if>
 
 <ul>
-  <li><a href='listAllPost.jsp'>List</a> all Posts.<br><br></li>
+  <li><a href='${pageContext.request.contextPath}/post/listAllPost.jsp'>List</a> all Posts.<br><br></li>
 
   <li>
-    <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/post.do">
-      <b>輸入貼文編號 (如101):</b>
-      <input type="text" name="postId">
-      <input type="hidden" name="action" value="getOne_For_Display">
-      <input type="submit" value="送出">
-    </FORM>
+    <form method="post" action="${pageContext.request.contextPath}/post.do">
+      <b>輸入貼文編號 (如1):</b>
+      <input type="text" name="postId" />
+      <input type="hidden" name="action" value="getOne_For_Display" />
+      <input type="submit" value="送出" />
+    </form>
   </li>
 
-  <jsp:useBean id="postSvc" scope="page" class="com.shakemate.post.model.PostService" />
-
   <li>
-    <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/post.do">
+    <form method="post" action="${pageContext.request.contextPath}/post.do">
       <b>選擇貼文編號:</b>
       <select size="1" name="postId">
-        <c:forEach var="postVO" items="${postSvc.all}">
-        <option value="${postVO.postId}">${postVO.postId}
-          </c:forEach>
+        <c:forEach var="postVO" items="${postList}">
+          <option value="${postVO.postId}">${postVO.postId}</option>
+        </c:forEach>
       </select>
-      <input type="hidden" name="action" value="getOne_For_Display">
-      <input type="submit" value="送出">
-    </FORM>
+      <input type="hidden" name="action" value="getOne_For_Display" />
+      <input type="submit" value="送出" />
+    </form>
   </li>
 
   <li>
-    <FORM METHOD="post" ACTION="${pageContext.request.contextPath}/post.do">
+    <form method="post" action="${pageContext.request.contextPath}/post.do">
       <b>選擇貼文文字:</b>
       <select size="1" name="postId">
-        <c:forEach var="postVO" items="${postSvc.all}">
-        <option value="${postVO.postId}">${postVO.postText}
-          </c:forEach>
+        <c:forEach var="postVO" items="${postList}">
+          <option value="${postVO.postId}">${postVO.postText}</option>
+        </c:forEach>
       </select>
-      <input type="hidden" name="action" value="getOne_For_Display">
-      <input type="submit" value="送出">
-    </FORM>
+      <input type="hidden" name="action" value="getOne_For_Display" />
+      <input type="submit" value="送出" />
+    </form>
   </li>
 </ul>
 

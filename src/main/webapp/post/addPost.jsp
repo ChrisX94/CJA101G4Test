@@ -31,27 +31,27 @@
         <tr>
             <td>使用者ID:</td>
             <td><input type="text" name="userId"
-                       value="${postVO.userId}" size="45"/></td>
+                       value="${post.userId}" size="45"/></td>
         </tr>
 
         <tr>
             <td>貼文內容:</td>
-            <td><textarea name="postText" rows="4" cols="45">${postVO.postText}</textarea></td>
+            <td><textarea name="postText" rows="4" cols="45">${post.postText}</textarea></td>
         </tr>
 
         <tr>
             <td>圖片網址:</td>
             <td><input type="text" name="imageUrl"
-                       value="${postVO.imageUrl != null ? postVO.imageUrl : ''}" size="45"/></td>
+                       value="${post.imageUrl != null ? post.imageUrl : ''}" size="45"/></td>
         </tr>
 
         <tr>
             <td>觀看權限:</td>
             <td>
                 <select name="viewerPermission">
-                    <option value="0" <c:if test="${postVO.viewerPermission == 0}">selected</c:if>>所有人</option>
-                    <option value="1" <c:if test="${postVO.viewerPermission == 1}">selected</c:if>>配對成功者</option>
-                    <option value="2" <c:if test="${postVO.viewerPermission == 2}">selected</c:if>>僅限自己</option>
+                    <option value="0" <c:if test="${post.viewerPermission == 0}">selected</c:if>>所有人</option>
+                    <option value="1" <c:if test="${post.viewerPermission == 1}">selected</c:if>>配對成功者</option>
+                    <option value="2" <c:if test="${post.viewerPermission == 2}">selected</c:if>>僅限自己</option>
                 </select>
             </td>
         </tr>

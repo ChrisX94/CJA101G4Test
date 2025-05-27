@@ -104,11 +104,11 @@
                     <input type="hidden" name="postId" value="${post.postId}"/>
                     <input type="submit" value="修改"/>
                 </form>
-                <form method="post" action="${pageContext.request.contextPath}/post.do" style="display:inline;">
-                    <input type="hidden" name="action" value="delete"/>
-                    <input type="hidden" name="postId" value="${post.postId}"/>
-                    <input type="submit" value="刪除"/>
-                </form>
+<%--                <form method="post" action="${pageContext.request.contextPath}/post.do" style="display:inline;">--%>
+<%--                    <input type="hidden" name="action" value="delete"/>--%>
+<%--                    <input type="hidden" name="postId" value="${post.postId}"/>--%>
+<%--                    <input type="submit" value="刪除"/>--%>
+<%--                </form>--%>
             </td>
         </tr>
     </c:forEach>

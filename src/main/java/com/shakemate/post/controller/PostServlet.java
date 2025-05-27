@@ -186,10 +186,11 @@ public class PostServlet extends HttpServlet {
     }
 
 
-    // 更新貼文
     private void update(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         Map<String, String> errors = new LinkedHashMap<>();
         req.setAttribute("errorMsgs", errors);
+
+        PostVO postVO = new PostVO();
 
         String postIdStr = req.getParameter("postId");
         String postText = req.getParameter("postText");
@@ -197,34 +198,55 @@ public class PostServlet extends HttpServlet {
         String viewerPermissionStr = req.getParameter("viewerPermission");
 
         Integer postId = null;
+        Integer userId = null;
         Byte viewerPermission = null;
 
         try {
             postId = Integer.valueOf(postIdStr);
+            postVO.setPostId(postId); // 正確設置 postId
         } catch (NumberFormatException e) {
             errors.put("postId", "貼文編號格式錯誤");
         }
 
+        String userIdStr = req.getParameter("userId");
+        if (userIdStr == null || userIdStr.trim().isEmpty()) {
+            errors.put("userId", "使用者編號不能為空");
+        } else {
+            try {
+                userId = Integer.valueOf(userIdStr);
+                postVO.setUserId(userId);
+            } catch (NumberFormatException e) {
+                errors.put("userId", "使用者編號格式錯誤");
+            }
+        }
+
         if (postText == null || postText.trim().isEmpty()) {
             errors.put("postText", "貼文內容不能為空");
+        } else {
+            postVO.setPostText(postText);
         }
+
+        postVO.setImageUrl(imageUrl); // 即使是 null 也可以先設進去，保留舊值
 
         if (viewerPermissionStr == null || viewerPermissionStr.trim().isEmpty()) {
             errors.put("viewerPermission", "瀏覽權限不能為空");
         } else {
             try {
                 viewerPermission = Byte.valueOf(viewerPermissionStr);
+                postVO.setViewerPermission(viewerPermission);
             } catch (NumberFormatException e) {
                 errors.put("viewerPermission", "瀏覽權限格式錯誤");
             }
         }
 
         if (!errors.isEmpty()) {
+            req.setAttribute("post", postVO); //  保留輸入
             RequestDispatcher rd = req.getRequestDispatcher("/post/updatePost.jsp");
             rd.forward(req, res);
             return;
         }
 
+        // 更新成功，調用 service
         PostVO updatedPost = postService.updatePost(postId, postText, imageUrl, viewerPermission);
 
         req.setAttribute("post", updatedPost);
@@ -232,6 +254,7 @@ public class PostServlet extends HttpServlet {
         RequestDispatcher rd = req.getRequestDispatcher("/post/listOnePost.jsp");
         rd.forward(req, res);
     }
+
 
     // 刪除貼文
     private void delete(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
