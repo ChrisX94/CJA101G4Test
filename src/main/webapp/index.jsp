@@ -12,6 +12,13 @@
 <br/>
 <a href="${pageContext.request.contextPath}/shop/shop.jsp">Shop 測試 Filter 登入用</a>
 <br/>
+<br/>
+
+	<FORM METHOD="post"
+		action="<%=request.getContextPath()%>/login/loginHandler"
+		style="margin-bottom: 0px;">
+		<input type=submit name="login" value="logout">
+	</FORM>
 
 </body>
 </html>

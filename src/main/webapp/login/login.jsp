@@ -44,14 +44,14 @@
 
 
 				<tr>
-					<td colspan=2 align=center><input type=submit value="  ok   ">
+					<td colspan=2 align=center><input type=submit  name= "login" value="login">
 
 					</td>
 				</tr>
 			</table>
 		</form>
 	</center>
-
+	<br>
 
 </body>
 </html>
