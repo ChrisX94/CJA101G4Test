@@ -33,6 +33,9 @@ public class LoginFilter implements Filter {
         }else{
             PrintWriter out = res.getWriter();
             out.println("Hi "+ account);
+            out.println("<br><FORM METHOD='post' action='" +
+                    req.getContextPath()+  "/login/loginHandler'" +
+                    " style='margin-bottom: 0px;'><input type=submit name='login' value='logout'></FORM>");
             chain.doFilter(request, response);
         }
 
