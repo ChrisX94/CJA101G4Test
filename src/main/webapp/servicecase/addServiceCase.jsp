@@ -37,7 +37,7 @@
 <table id="table-1">
 	<tr>
 		<td><h3>新增案件</h3></td>
-		<td><h4><a href="select_page.jsp"><img src="${pageContext.request.contextPath}/servicecase/images/tomcat.png" width="100" height="80" border="0">回首頁</a></h4></td>
+		<td><h4><a href="${pageContext.request.contextPath}/servicecase/select_page.jsp"><img src="${pageContext.request.contextPath}/servicecase/images/tomcat.png" width="100" height="80" border="0">回首頁</a></h4></td>
 	</tr>
 </table>
 

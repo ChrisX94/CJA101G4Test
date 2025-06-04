@@ -43,6 +43,17 @@
  <input type="text" name="caseId">
  <input type="hidden" name="action" value="getOne_For_Display">
  <input type="submit" value="查詢">
+ 
+ 		<%-- 錯誤訊息 --%>
+		<c:if test="${not empty errorMsgs}">
+			<ul>
+				<c:forEach var="msg" items="${errorMsgs}">
+					<li style="color: red">${msg}</li>
+				</c:forEach>
+				<font color="red">請重新輸入查詢條件!</font>
+			</ul>
+		</c:if>
+ 
 </form>
 
 <ul>
