@@ -18,7 +18,17 @@
         <res-type>javax.sql.DataSource</res-type>
         <res-auth>Container</res-auth>
     </resource-ref>
-
+    
+<!--     6/4 加入 -->
+    <servlet>
+		<servlet-name>ServiceCaseServlet</servlet-name>
+		<servlet-class>com.shakemate.servicecase.controller.ServiceCaseServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ServiceCaseServlet</servlet-name>
+		<url-pattern>/servicecase/servicecase.do</url-pattern>
+	</servlet-mapping>
+	
 
 <!-- 這裡是註冊濾器 -->
     <filter>
