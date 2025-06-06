@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%
-    PostVO postVO = (PostVO) request.getAttribute("post"); // 從req拿屬性，存了一個postVO
+    PostVO postVO = (PostVO) request.getAttribute("post");
 %>
 
 <html>
@@ -26,7 +26,8 @@
     </ul>
 </c:if>
 
-<form method="post" action="${pageContext.request.contextPath}/post.do">
+<!-- ✅ 加上 enctype="multipart/form-data" -->
+<form method="post" action="${pageContext.request.contextPath}/post.do" enctype="multipart/form-data">
     <table>
         <tr>
             <td>使用者ID:</td>
@@ -40,9 +41,8 @@
         </tr>
 
         <tr>
-            <td>圖片網址:</td>
-            <td><input type="text" name="imageUrl"
-                       value="${post.imageUrl != null ? post.imageUrl : ''}" size="45"/></td>
+            <td>上傳圖片:</td>
+            <td><input type="file" name="imageFile" accept="image/*"/></td>
         </tr>
 
         <tr>

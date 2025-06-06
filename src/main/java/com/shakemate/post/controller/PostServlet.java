@@ -2,19 +2,24 @@ package com.shakemate.post.controller;
 
 import com.shakemate.post.model.PostService;
 import com.shakemate.post.model.PostVO;
+import com.shakemate.util.PostImageUploader;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 @WebServlet("/post.do")
+@MultipartConfig
 public class PostServlet extends HttpServlet {
     private PostService postService;
 
@@ -104,9 +109,16 @@ public class PostServlet extends HttpServlet {
         // 取得並驗證輸入參數
         String userIdStr = req.getParameter("userId");
         String postText = req.getParameter("postText");
-        String imageUrl = req.getParameter("imageUrl");
-        postVO.setImageUrl(imageUrl);
+//        String imageUrl = req.getParameter("imageUrl");
+
         String viewerPermissionStr = req.getParameter("viewerPermission");
+
+
+        Part imagePart = req.getPart("imageFile");
+        String imageUrl = "";
+        imageUrl = PostImageUploader.uploadImageToImgbb(imagePart);
+        System.out.println("ImageUrl : " + imageUrl);
+        postVO.setImageUrl(imageUrl);
 
         Integer userId = null;
         Byte viewerPermission = null;
@@ -194,12 +206,24 @@ public class PostServlet extends HttpServlet {
 
         String postIdStr = req.getParameter("postId");
         String postText = req.getParameter("postText");
-        String imageUrl = req.getParameter("imageUrl");
+//        String imageUrl = req.getParameter("imageUrl");
         String viewerPermissionStr = req.getParameter("viewerPermission");
 
         Integer postId = null;
         Integer userId = null;
         Byte viewerPermission = null;
+
+        Part imagePart = req.getPart("imageFile");
+        String imageUrl = req.getParameter("imageUrl"); // 預設值：舊圖
+
+        if (imagePart != null && imagePart.getSize() > 0) {
+            try {
+                imageUrl = PostImageUploader.uploadImageToImgbb(imagePart);
+            } catch (IOException e) {
+                e.printStackTrace();
+                errors.put("imageUrl", "圖片上傳失敗，請稍後再試");
+            }
+        }
 
         try {
             postId = Integer.valueOf(postIdStr);

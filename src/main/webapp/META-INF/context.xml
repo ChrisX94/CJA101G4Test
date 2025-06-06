@@ -1,5 +1,17 @@
-<Resource name="jdbc/testshakemate" auth="Container" type="javax.sql.DataSource"
-          maxTotal="20" maxIdle="10" maxWaitMillis="-1"
-          username="root" password="hsp123456"
-          driverClassName="com.mysql.cj.jdbc.Driver"
-          url="jdbc:mysql://localhost:3306/testshakemate?serverTimezone=Asia/Taipei"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/">
+    <!-- 註冊 JNDI 資料來源 -->
+    <Resource
+            name="jdbc/testshakemate"
+            auth="Container"
+            type="javax.sql.DataSource"
+            driverClassName="com.mysql.cj.jdbc.Driver"
+            url="jdbc:mysql://localhost:3306/testshakemate?serverTimezone=Asia/Taipei"
+            username="root"
+            password="hys123456"
+            maxTotal="20"
+            maxIdle="10"
+            maxWaitMillis="-1"
+    />
+
+</Context>

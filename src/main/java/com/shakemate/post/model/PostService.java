@@ -8,7 +8,8 @@ public class PostService {
     private PostDAO_interface dao;
 
     public PostService() {
-        dao = new PostDAO();
+//        dao = new PostDAO();
+        dao = new PostHibernateDAO();
     }
 
     public PostVO addPost(Integer userId, String postText, String imageUrl,
