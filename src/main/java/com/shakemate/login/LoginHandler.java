@@ -71,7 +71,7 @@ public class LoginHandler extends HttpServlet{
             out.println("</BODY></HTML>");
         }else{ // 登入成功
             HttpSession session = req.getSession();
-            session.setAttribute("account", user.getUsername()); // 這裡的登錄的attribute的先用 userName
+            session.setAttribute("account", user.getUserId()); // 這裡的登錄的attribute的用 userId
 
             // 這裡是設定重導回前面拜訪過的頁面
             try{
