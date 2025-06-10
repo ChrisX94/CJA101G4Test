@@ -1,4 +1,4 @@
-package com.g4.service.model;
+package com.shakemate.service.model;
 
 public class HelloGit {
 	public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package com.shakemate.match.model; // 包名請使用全小寫
+package com.shakemate.match.model;
 
 public class MatchVO {
 
