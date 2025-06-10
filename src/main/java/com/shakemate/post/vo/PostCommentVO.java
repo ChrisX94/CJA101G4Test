@@ -1,6 +1,32 @@
-package com.shakemate.post.model;
+package com.shakemate.post.vo;
 
 import java.sql.Timestamp;
+
+/**
+ * 表格名稱：貼文留言 (POST_COMMENTS)
+ *
+ * 主鍵：
+ *   - COMMENT_ID
+ *
+ * 外來鍵：
+ *   - POST_ID ➔ POST(POST_ID)
+ *   - USER_ID ➔ USERS(USER_ID)
+ *   - PARENT_COMMENT_ID ➔ POST_COMMENTS(COMMENT_ID)
+ *
+ * 欄位說明：
+ * ----------------------------------------------------------------------------------------------
+ * | 欄位名稱           | 欄位敘述     | 資料型態 | 長度 | 備註                                |
+ * ----------------------------------------------------------------------------------------------
+ * | COMMENT_ID         | 留言編號     | INT      |      | Not Null, 主鍵, 自動遞增(AI)        |
+ * | POST_ID            | 貼文編號     | INT      |      | Not Null, 外來鍵                    |
+ * | COMMENT_TIME       | 留言時間     | DATETIME |      | 可為 null                           |
+ * | COMMENT_TEXT       | 留言內容     | VARCHAR  | 500  | 可為 null                           |
+ * | USER_ID            | 會員編號     | INT      |      | Not Null, 外來鍵                    |
+ * | PARENT_COMMENT_ID  | 父留言       | INT      |      | 外來鍵，允許 null                   |
+ * | COMMENT_COUNT      | 留言數       | INT      |      | 預設為 0                            |
+ * ----------------------------------------------------------------------------------------------
+ */
+
 
 public class PostCommentVO {
 

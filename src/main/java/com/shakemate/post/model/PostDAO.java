@@ -1,7 +1,9 @@
 package com.shakemate.post.model;
 
 
-import org.junit.jupiter.api.Test;
+//import org.junit.jupiter.api.Test;
+
+import com.shakemate.post.vo.PostVO;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -47,7 +49,7 @@ public class PostDAO implements PostDAO_interface{
             "SELECT * FROM POST ORDER BY POST_ID";
 
 
-    @Test
+//    @Test
     public void Test() {
         PostVO postVO = new PostVO();
         postVO.setUserId(1);  // 假設 userId 1 存在

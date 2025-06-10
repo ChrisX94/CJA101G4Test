@@ -1,4 +1,5 @@
 package com.shakemate.post.model;
+import com.shakemate.post.vo.PostVO;
 import com.shakemate.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;

@@ -23,7 +23,7 @@
         <property name="hibernate.current_session_context_class">thread</property>
 
         <!-- Mapping 標籤可以加速 Hibernate 的初始載入速度 -->
-        <mapping class="com.shakemate.post.model.PostVO" />
+        <mapping class="com.shakemate.post.vo.PostVO" />
 
 
     </session-factory>

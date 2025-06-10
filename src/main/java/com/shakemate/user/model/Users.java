@@ -1,15 +1,32 @@
 package com.shakemate.user.model;
 
-import javax.persistence.*;
+import com.shakemate.activity.vo.ActivityVO;
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "USERS")
 public class Users implements Serializable {
     private static final long serialVersionUID = 1L;
+
+    // 一對多：一個會員有多個活動
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<ActivityVO> activities = new ArrayList<>();
+
+    // getter 和 setter
+    public List<ActivityVO> getActivities() {
+        return activities;
+    }
+
+    public void setActivities(List<ActivityVO> activities) {
+        this.activities = activities;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

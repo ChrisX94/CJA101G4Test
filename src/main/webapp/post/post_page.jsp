@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.shakemate.post.model.*"%>
 <%@ page import="java.util.List" %>
+<%@ page import="com.shakemate.post.vo.PostVO" %>
 
 <%
   // 建立 PostService 物件，並呼叫 getAll() 取得貼文列表

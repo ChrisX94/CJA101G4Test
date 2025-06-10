@@ -1,5 +1,9 @@
-package com.shakemate.activity.model.vo;
+package com.shakemate.activity.vo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.shakemate.user.model.Users;
+import jakarta.persistence.*;
+import lombok.*;
 import java.sql.Timestamp;
 
 /**
@@ -38,31 +42,92 @@ import java.sql.Timestamp;
  * +-----+-------------------+------------------+-------------+----------+---------------------------------------------+
  */
 
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Table(name = "ACTIVITY")
 public class ActivityVO {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ACTIVITY_ID")
     private Integer activityId;
-    private Integer userId;
-    private String title;
-    private String content;
-    private String imageUrl;
-    private String location;
-    private Byte activityStatus; // 0: 發起中, 1: 開始, 2: 結束, 3: 取消或下架
-    private Timestamp createdTime;
-    private Timestamp updatedTime;
-    private Timestamp regStartTime;
-    private Timestamp regEndTime;
-    private Timestamp activStartTime;
-    private Timestamp activEndTime;
-    private Byte genderFilter; // 0: 不限, 1: 男, 2: 女
-    private Integer maxAge;
-    private Integer minAge;
-    private Timestamp expiredTime;
-    private Integer maxPeople;
-    private Integer minPeople;
-    private Integer signupCount;
-    private Integer ratingCount;
-    private Integer rating;
-    private Integer commentCount;
-    private Integer reportCount;
 
+    // 多對一：多個活動對應一個會員
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID", nullable = false)
+    private Users user;
+
+    @Column(name = "TITLE", length = 50, nullable = false)
+    private String title;
+
+    @Column(name = "CONTENT", length = 1000, nullable = false)
+    private String content;
+
+    @Column(name = "IMAGE_URL", length = 300)
+    private String imageUrl;
+
+    @Column(name = "LOCATION", length = 100, nullable = false)
+    private String location;
+
+    @Column(name = "ACTIVITY_STATUS", nullable = false)
+    private Byte activityStatus;
+
+    @Column(name = "CREATED_TIME", nullable = false, updatable = false)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Timestamp createdTime;
+
+    @Column(name = "UPDATED_TIME", nullable = false)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Timestamp updatedTime;
+
+    @Column(name = "REG_START_TIME", nullable = false)
+    private Timestamp regStartTime;
+
+    @Column(name = "REG_END_TIME", nullable = false)
+    private Timestamp regEndTime;
+
+    @Column(name = "ACTIV_START_TIME", nullable = false)
+    private Timestamp activStartTime;
+
+    @Column(name = "ACTIV_END_TIME", nullable = false)
+    private Timestamp activEndTime;
+
+    @Column(name = "GENDER_FILTER", nullable = false)
+    private Byte genderFilter;
+
+    @Column(name = "MAX_AGE", nullable = false)
+    private Integer maxAge;
+
+    @Column(name = "MIN_AGE", nullable = false)
+    private Integer minAge;
+
+    @Column(name = "EXPIRED_TIME", nullable = false)
+    private Timestamp expiredTime;
+
+    @Column(name = "MAX_PEOPLE", nullable = false)
+    private Integer maxPeople;
+
+    @Column(name = "MIN_PEOPLE", nullable = false)
+    private Integer minPeople;
+
+    @Column(name = "SIGNUP_COUNT", nullable = false)
+    private Integer signupCount;
+
+    @Column(name = "RATING_COUNT", nullable = false)
+    private Integer ratingCount;
+
+    @Column(name = "RATING", nullable = false)
+    private Integer rating;
+
+    @Column(name = "COMMENT_COUNT", nullable = false)
+    private Integer commentCount;
+
+    @Column(name = "REPORT_COUNT", nullable = false)
+    private Integer reportCount;
 }
+

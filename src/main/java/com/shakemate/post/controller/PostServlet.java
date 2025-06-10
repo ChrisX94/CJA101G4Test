@@ -2,7 +2,7 @@ package com.shakemate.post.controller;
 
 import com.google.gson.Gson;
 import com.shakemate.post.model.PostService;
-import com.shakemate.post.model.PostVO;
+import com.shakemate.post.vo.PostVO;
 import com.shakemate.util.PostImageUploader;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -14,7 +14,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.LinkedHashMap;
 import java.util.Map;

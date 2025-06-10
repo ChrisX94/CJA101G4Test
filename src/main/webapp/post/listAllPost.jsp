@@ -3,6 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="java.util.*"%>
 <%@ page import="com.shakemate.post.model.*"%>
+<%@ page import="com.shakemate.post.vo.PostVO" %>
 
 <%
     PostService postSvc = new PostService();

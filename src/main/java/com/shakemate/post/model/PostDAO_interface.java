@@ -1,5 +1,7 @@
 package com.shakemate.post.model;
 
+import com.shakemate.post.vo.PostVO;
+
 import java.util.*;
 
 public interface PostDAO_interface {

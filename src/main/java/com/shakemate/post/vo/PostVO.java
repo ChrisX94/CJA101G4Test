@@ -1,8 +1,36 @@
-package com.shakemate.post.model;
+package com.shakemate.post.vo;
 
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
+
+/**
+ * 表格名稱：貼文 (POST)
+ *
+ * 主鍵：
+ *   - POST_ID
+ *
+ * 外來鍵：
+ *   - USER_ID ➔ USERS(USER_ID)
+ *
+ * 欄位說明：
+ * ----------------------------------------------------------------------------------------------
+ * | 欄位名稱          | 欄位敘述       | 資料型態 | 長度  | 備註                                  |
+ * ----------------------------------------------------------------------------------------------
+ * | POST_ID           | 貼文編號       | INT      |       | Not Null, 主鍵, 自動遞增(AI)          |
+ * | USER_ID           | 發文者         | INT      |       | Not Null, 外來鍵                      |
+ * | POST_TEXT         | 內容           | VARCHAR  | 1000  | Not Null                              |
+ * | IMAGE_URL         | 附加圖片       | VARCHAR  | 300   | (IMG_URL)，可為 null                  |
+ * | POST_TIME         | 發文時間       | DATETIME |       | Not Null                              |
+ * | VIEWER_PERMISSION | 觀看者權限     | TINYINT  |       | Not Null                              |
+ * |                   |                |          |       | 0: 所有人（預設）                     |
+ * |                   |                |          |       | 1: 配對成功者                          |
+ * |                   |                |          |       | 2: 僅限自己                            |
+ * | LIKES_COUNT       | 按讚總數       | INT      |       | 可為 null                             |
+ * | COMMENT_COUNT     | 留言數         | INT      |       | 預設為 0                              |
+ * ----------------------------------------------------------------------------------------------
+ */
+
 
 @Entity
 @Table(name = "post")
