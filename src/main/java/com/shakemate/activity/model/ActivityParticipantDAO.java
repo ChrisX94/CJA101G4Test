@@ -1,6 +1,7 @@
 package com.shakemate.activity.model;
 
 
+import com.shakemate.activity.model.vo.ActivityParticipantVO;
 import org.junit.jupiter.api.Test;
 
 import java.sql.*;

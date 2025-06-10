@@ -1,5 +1,6 @@
-package com.shakemate.activity.model;
+package com.shakemate.activity.model.vo;
 
+import com.shakemate.activity.model.ActivityDAO_interface;
 import org.testng.annotations.Test;
 
 import java.sql.*;

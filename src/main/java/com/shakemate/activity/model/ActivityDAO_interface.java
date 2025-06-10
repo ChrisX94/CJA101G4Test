@@ -1,5 +1,7 @@
 package com.shakemate.activity.model;
 
+import com.shakemate.activity.model.vo.ActivityVO;
+
 import java.util.*;
 
 public interface ActivityDAO_interface {

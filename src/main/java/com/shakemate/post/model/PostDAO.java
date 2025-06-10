@@ -1,8 +1,6 @@
 package com.shakemate.post.model;
 
 
-import com.mysql.cj.protocol.Resultset;
-import com.shakemate.activity.model.ActivityVO;
 import org.junit.jupiter.api.Test;
 
 import javax.naming.Context;

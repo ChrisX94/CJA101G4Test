@@ -1,6 +1,8 @@
 package com.shakemate.activity.model;
 
 
+import com.shakemate.activity.model.vo.ActivityCommentVO;
+
 import java.util.*;
 
 public interface ActivityCommentDAO_interface {

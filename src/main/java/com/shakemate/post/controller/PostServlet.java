@@ -1,5 +1,6 @@
 package com.shakemate.post.controller;
 
+import com.google.gson.Gson;
 import com.shakemate.post.model.PostService;
 import com.shakemate.post.model.PostVO;
 import com.shakemate.util.PostImageUploader;
@@ -22,6 +23,7 @@ import java.util.Map;
 @MultipartConfig
 public class PostServlet extends HttpServlet {
     private PostService postService;
+    private final Gson gson = new Gson();
 
     @Override
     public void init() {
@@ -95,8 +97,14 @@ public class PostServlet extends HttpServlet {
         }
 
         req.setAttribute("post", postVO);
-        RequestDispatcher rd = req.getRequestDispatcher("/post/listOnePost.jsp");
-        rd.forward(req, res);
+        res.setContentType("application/json; charset=UTF-8");
+        String json = gson.toJson(postVO);
+        res.getWriter().write(json);
+
+
+
+//        RequestDispatcher rd = req.getRequestDispatcher("/post/listOnePost.jsp");
+//        rd.forward(req, res);
     }
 
     // 新增貼文

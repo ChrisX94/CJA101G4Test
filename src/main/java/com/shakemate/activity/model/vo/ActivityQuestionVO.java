@@ -1,4 +1,4 @@
-package com.shakemate.activity.model;
+package com.shakemate.activity.model.vo;
 
 public class ActivityQuestionVO {
 
