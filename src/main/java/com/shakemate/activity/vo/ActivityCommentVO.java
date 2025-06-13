@@ -2,6 +2,10 @@ package com.shakemate.activity.vo;
 
 import java.sql.Timestamp;
 
+import com.shakemate.user.model.Users;
+import jakarta.persistence.*;
+import lombok.*;
+
 /**
  * 表格名稱：活動留言 (ACTIVITY_COMMENTS)
  *
@@ -27,70 +31,52 @@ import java.sql.Timestamp;
  * ------------------------------------------------------------------------------
  */
 
-
+@Entity
+@Table(name = "ACTIVITY_COMMENTS")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ActivityCommentVO {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // 自動遞增
+    @Column(name = "COMMENT_ID", nullable = false)
     private Integer commentId;
-    private Integer activityId;
-    private Integer userId;
+
+//    @Column(name = "ACTIVITY_ID", nullable = false)
+//    private Integer activityId;
+
+    // 關聯到 Activity 實體
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "ACTIVITY_ID", nullable = false)
+    private ActivityVO activity;
+
+//    @Column(name = "USER_ID", nullable = false)
+//    private Integer userId;
+
+    // 關聯到 User 實體
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "USER_ID", nullable = false)
+    private Users user;
+
+    @Column(name = "CONTENT", nullable = false, length = 500)
     private String content;
-    private Integer parentCommentId;
+
+    // 父留言，多對一，nullable = true 表示可無父留言（null）
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PARENT_COMMENT_ID")
+    private ActivityCommentVO parentComment;
+
+//    @Column(name = "PARENT_COMMENT_ID", nullable = true)
+//    private Integer parentCommentId;
+
+    @Column(name = "COMMENT_TIME")
     private Timestamp commentTime;
-    private Integer commentCount;
 
-    public Integer getCommentId() {
-        return commentId;
-    }
+    @Column(name = "COMMENT_COUNT", nullable = false)
+    @Builder.Default
+    private Integer commentCount = 0;
 
-    public void setCommentId(Integer commentId) {
-        this.commentId = commentId;
-    }
-
-    public Integer getActivityId() {
-        return activityId;
-    }
-
-    public void setActivityId(Integer activityId) {
-        this.activityId = activityId;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Integer getParentCommentId() {
-        return parentCommentId;
-    }
-
-    public void setParentCommentId(Integer parentCommentId) {
-        this.parentCommentId = parentCommentId;
-    }
-
-    public Timestamp getCommentTime() {
-        return commentTime;
-    }
-
-    public void setCommentTime(Timestamp commentTime) {
-        this.commentTime = commentTime;
-    }
-
-    public Integer getCommentCount() {
-        return commentCount;
-    }
-
-    public void setCommentCount(Integer commentCount) {
-        this.commentCount = commentCount;
-    }
 }

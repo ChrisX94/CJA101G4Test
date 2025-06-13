@@ -53,13 +53,13 @@ public class ActivityParticipantVO {
     // 關聯對應
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("participantId") // 對應複合主鍵中的欄位
-    @JoinColumn(name = "PARTICIPANT_ID", nullable = false)
+    @JoinColumn(name = "PARTICIPANT_ID", nullable = false, insertable = false, updatable = false)
     private Users participant;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("activityId")
-    @JoinColumn(name = "ACTIVITY_ID", nullable = false)
+    @JoinColumn(name = "ACTIVITY_ID", nullable = false, insertable = false, updatable = false)
     private ActivityVO activity;
 
 

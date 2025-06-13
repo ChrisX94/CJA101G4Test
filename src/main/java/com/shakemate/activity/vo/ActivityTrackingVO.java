@@ -2,6 +2,9 @@ package com.shakemate.activity.vo;
 
 import java.sql.Timestamp;
 
+import com.shakemate.user.model.Users;
+import jakarta.persistence.*;
+import lombok.*;
 /**
  * 表格名稱：活動追蹤 (ACTIVITY_TRACKING)
  *
@@ -25,43 +28,37 @@ import java.sql.Timestamp;
  * ------------------------------------------------------------------------------
  */
 
-
+@Entity
+@Table(name = "activity_tracking")
+@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ActivityTrackingVO {
 
-    private Integer activityId;
-    private Integer userId;
+    @EmbeddedId
+    private ActivityTrackingId id;
+
+//    private Integer activityId;
+//    private Integer userId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("activityId")
+    @JoinColumn(name = "ACTIVITY_ID", nullable = false)
+    private ActivityVO activity;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("userId")
+    @JoinColumn(name = "USER_ID", nullable = false)
+    private Users user;
+
+    @Column(name = "TRACKING_TIME", nullable = false)
     private Timestamp trackingTime;
+
+    @Column(name = "TRACKING_STATE", nullable = false)
     private Byte trackingState; // 0: 正在追蹤, 1: 取消追蹤
 
-    public Integer getActivityId() {
-        return activityId;
-    }
 
-    public void setActivityId(Integer activityId) {
-        this.activityId = activityId;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public Timestamp getTrackingTime() {
-        return trackingTime;
-    }
-
-    public void setTrackingTime(Timestamp trackingTime) {
-        this.trackingTime = trackingTime;
-    }
-
-    public Byte getTrackingState() {
-        return trackingState;
-    }
-
-    public void setTrackingState(Byte trackingState) {
-        this.trackingState = trackingState;
-    }
 }
