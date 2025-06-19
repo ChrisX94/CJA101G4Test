@@ -1,4 +1,9 @@
-package com.shakemate.activity.vo;
+package com.shakemate.activity.entity;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+
+import lombok.*;
 
 /**
  * 表格名稱：活動問題 (ACTIVITY_QUESTIONS)
@@ -21,42 +26,37 @@ package com.shakemate.activity.vo;
  */
 
 
-public class ActivityQuestionVO {
+@Entity
+@Table(name = "activity_questions")
+@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class ActivityQuestion {
 
+    @ManyToOne
+    @JoinColumn(name = "ACTIVITY_ID", nullable = false)
+    private Activity activity;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "QUESTION_ID")
     private Integer questionId;
-    private Integer activityId;
+
+//    @NotNull
+//    @Column(name = "ACTIVITY_ID", nullable = false)
+//    private Integer activityId;
+
+    @NotNull
+    @Size(min = 1, max = 255)
+    @Column(name = "QUESTION_TEXT", nullable = false, length = 255)
     private String questionText;
+
+    @NotNull
+    @Min(1)
+    @Max(5)
+    @Column(name = "QUESTION_ORDER", nullable = false)
     private Byte questionOrder; // 顯示順序 (1~5)
-
-    public Integer getQuestionId() {
-        return questionId;
-    }
-
-    public void setQuestionId(Integer questionId) {
-        this.questionId = questionId;
-    }
-
-    public Integer getActivityId() {
-        return activityId;
-    }
-
-    public void setActivityId(Integer activityId) {
-        this.activityId = activityId;
-    }
-
-    public String getQuestionText() {
-        return questionText;
-    }
-
-    public void setQuestionText(String questionText) {
-        this.questionText = questionText;
-    }
-
-    public Byte getQuestionOrder() {
-        return questionOrder;
-    }
-
-    public void setQuestionOrder(Byte questionOrder) {
-        this.questionOrder = questionOrder;
-    }
 }

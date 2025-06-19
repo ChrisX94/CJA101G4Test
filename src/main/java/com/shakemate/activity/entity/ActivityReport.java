@@ -1,4 +1,10 @@
-package com.shakemate.activity.vo;
+package com.shakemate.activity.entity;
+
+import com.shakemate.user.model.Users;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.*;
 
 import java.sql.Timestamp;
 
@@ -39,106 +45,71 @@ import java.sql.Timestamp;
  * -----------------------------------------------------------------------------------------------
  */
 
+@Entity
+@Table(name = "activity_reports")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class ActivityReport {
 
-public class ActivityReportVO {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "RP_USER_ID")
     private Integer rpUserId;
+
+    @NotNull
+    @Column(name = "USER_ID", insertable = false, updatable = false, nullable = false)
     private Integer userId;
+
+    @NotNull
+    @Column(name = "ACTIVITY_ID", insertable = false, updatable = false, nullable = false)
     private Integer activityId;
+
+    @NotNull
+    @Column(name = "RP_REASON", nullable = false)
     private Byte rpReason; // 0~4 對應檢舉原因
+
+    @NotNull
+    @Size(max = 800)
+    @Column(name = "RP_CONTENT", nullable = false, length = 800)
     private String rpContent;
+
+    @Size(max = 800)
+    @Column(name = "RP_PIC", length = 800)
     private String rpPic;
+
+    @NotNull
+    @Column(name = "RP_TIME", nullable = false)
     private Timestamp rpTime;
+
+    @NotNull
+    @Column(name = "ADM_ID", insertable = false, updatable = false, nullable = false)
     private Integer admId;
+
+    @Column(name = "RP_DONE_TIME")
     private Timestamp rpDoneTime;
+
+    @NotNull
+    @Column(name = "RP_STATUS", nullable = false)
     private Byte rpStatus; // 0: 未處理, 1: 通過, 2: 不通過
+
+    @Size(max = 800)
+    @Column(name = "RP_NOTE", nullable = false, length = 800)
     private String rpNote;
 
-    public Integer getRpUserId() {
-        return rpUserId;
-    }
+    // ----- 關聯關係 -----
 
-    public void setRpUserId(Integer rpUserId) {
-        this.rpUserId = rpUserId;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID")
+    private Users user;
 
-    public Integer getUserId() {
-        return userId;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ACTIVITY_ID")
+    private Activity activity;
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "ADM_ID")
+//    private AdminVO admin;
 
-    public Integer getActivityId() {
-        return activityId;
-    }
-
-    public void setActivityId(Integer activityId) {
-        this.activityId = activityId;
-    }
-
-    public Byte getRpReason() {
-        return rpReason;
-    }
-
-    public void setRpReason(Byte rpReason) {
-        this.rpReason = rpReason;
-    }
-
-    public String getRpContent() {
-        return rpContent;
-    }
-
-    public void setRpContent(String rpContent) {
-        this.rpContent = rpContent;
-    }
-
-    public String getRpPic() {
-        return rpPic;
-    }
-
-    public void setRpPic(String rpPic) {
-        this.rpPic = rpPic;
-    }
-
-    public Timestamp getRpTime() {
-        return rpTime;
-    }
-
-    public void setRpTime(Timestamp rpTime) {
-        this.rpTime = rpTime;
-    }
-
-    public Integer getAdmId() {
-        return admId;
-    }
-
-    public void setAdmId(Integer admId) {
-        this.admId = admId;
-    }
-
-    public Timestamp getRpDoneTime() {
-        return rpDoneTime;
-    }
-
-    public void setRpDoneTime(Timestamp rpDoneTime) {
-        this.rpDoneTime = rpDoneTime;
-    }
-
-    public Byte getRpStatus() {
-        return rpStatus;
-    }
-
-    public void setRpStatus(Byte rpStatus) {
-        this.rpStatus = rpStatus;
-    }
-
-    public String getRpNote() {
-        return rpNote;
-    }
-
-    public void setRpNote(String rpNote) {
-        this.rpNote = rpNote;
-    }
 }

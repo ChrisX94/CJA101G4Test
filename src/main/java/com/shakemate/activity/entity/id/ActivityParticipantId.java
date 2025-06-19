@@ -1,4 +1,4 @@
-package com.shakemate.activity.vo;
+package com.shakemate.activity.entity.id;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

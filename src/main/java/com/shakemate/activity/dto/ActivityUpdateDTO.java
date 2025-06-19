@@ -1,19 +1,11 @@
 package com.shakemate.activity.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.validation.constraints.*;
-import lombok.Data;
+import lombok.*;
 
 import java.sql.Timestamp;
 
 @Data
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class ActivityDTO {
-
-
-    private Integer activityId;
-
-    private Integer userId;      // 只保留 userId，避免整個 User 物件嵌套
+public class ActivityUpdateDTO {
 
     private String title;
 
@@ -23,44 +15,29 @@ public class ActivityDTO {
 
     private String location;
 
-    private Byte activityStatus = 0;
-
-
-    private Timestamp createdTime;
-
+    private Byte activityStatus;
 
     private Timestamp updatedTime;
 
-
     private Timestamp regStartTime;
-
 
     private Timestamp regEndTime;
 
-
     private Timestamp activStartTime;
-
 
     private Timestamp activEndTime;
 
-
-    private Byte genderFilter = 0;
-
+    private Byte genderFilter;
 
     private Integer maxAge;
 
-
     private Integer minAge;
-
 
     private Timestamp expiredTime;
 
-
     private Integer maxPeople;
 
-
     private Integer minPeople;
-
 
     private Integer signupCount;
 
@@ -71,5 +48,4 @@ public class ActivityDTO {
     private Integer commentCount;
 
     private Integer reportCount;
-
 }

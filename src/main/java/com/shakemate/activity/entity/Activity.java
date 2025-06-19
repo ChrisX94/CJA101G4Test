@@ -1,10 +1,12 @@
-package com.shakemate.activity.vo;
+package com.shakemate.activity.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.shakemate.user.model.Users;
 import jakarta.persistence.*;
 import lombok.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * 表格名稱：活動（ACTIVITY）
@@ -50,7 +52,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @Builder
 @Table(name = "ACTIVITY")
-public class ActivityVO {
+public class Activity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -129,5 +131,22 @@ public class ActivityVO {
 
     @Column(name = "REPORT_COUNT", nullable = false)
     private Integer reportCount;
+
+    // One To Many --
+
+    // 一個活動對應多個活動參與
+    @JsonIgnore
+    @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ActivityParticipant> activityParticipants;
+
+    // 一個活動對應多個活動問題
+    @JsonIgnore
+    @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ActivityQuestion> activityQuestions;
+
+    // 一個活動對應多個活動留言
+    @JsonIgnore
+    @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ActivityComment> activityComments;
 }
 

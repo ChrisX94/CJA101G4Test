@@ -1,5 +1,6 @@
-package com.shakemate.activity.vo;
+package com.shakemate.activity.entity;
 
+import com.shakemate.activity.entity.id.ActivityParticipantId;
 import com.shakemate.user.model.Users;
 import jakarta.persistence.*;
 import lombok.*;
@@ -42,13 +43,10 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @Builder
 @Table(name = "activity_participant")
-public class ActivityParticipantVO {
+public class ActivityParticipant {
 
     @EmbeddedId
     private ActivityParticipantId id;
-
-//    private Integer participantId;
-//    private Integer activityId;
 
     // 關聯對應
     @ManyToOne(fetch = FetchType.LAZY)
@@ -60,7 +58,7 @@ public class ActivityParticipantVO {
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("activityId")
     @JoinColumn(name = "ACTIVITY_ID", nullable = false, insertable = false, updatable = false)
-    private ActivityVO activity;
+    private Activity activity;
 
 
     @Column(name = "ADM_REVIEW_TIME")
@@ -81,17 +79,5 @@ public class ActivityParticipantVO {
     @Column(name = "REVIEW_TIME")
     private Timestamp reviewTime;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ActivityParticipantVO)) return false;
-        ActivityParticipantVO that = (ActivityParticipantVO) o;
-        return id != null && id.equals(that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
-    }
 
 }

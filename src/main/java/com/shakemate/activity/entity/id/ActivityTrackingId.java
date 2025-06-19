@@ -1,9 +1,8 @@
-package com.shakemate.activity.vo;
+package com.shakemate.activity.entity.id;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.*;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Embeddable
 @Data

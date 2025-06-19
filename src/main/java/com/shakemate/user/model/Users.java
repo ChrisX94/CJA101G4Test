@@ -1,7 +1,12 @@
 package com.shakemate.user.model;
 
-import com.shakemate.activity.vo.ActivityVO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.shakemate.activity.entity.Activity;
+import com.shakemate.activity.entity.ActivityComment;
+import com.shakemate.activity.entity.ActivityParticipant;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.sql.Date;
@@ -11,22 +16,28 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "USERS")
 public class Users implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    // 一對多：一個會員有多個活動
+    // 一對多：一個會員發起多個活動
+    @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<ActivityVO> activities = new ArrayList<>();
+    private List<Activity> activities = new ArrayList<>();
 
-    // getter 和 setter
-    public List<ActivityVO> getActivities() {
-        return activities;
-    }
+    // 一對多：一個會員有多個活動參與
+    @JsonIgnore
+    @OneToMany(mappedBy = "participant", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<ActivityParticipant> activityParticipants = new ArrayList<>();
 
-    public void setActivities(List<ActivityVO> activities) {
-        this.activities = activities;
-    }
+    // 一個會員發出多則留言
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<ActivityComment> activityComments = new ArrayList<>();
+
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -115,173 +126,173 @@ public class Users implements Serializable {
         this.sellStatus = sellStatus;
     }
 
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPwd() {
-        return pwd;
-    }
-
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
-    }
-
-    public Integer getGender() {
-        return gender;
-    }
-
-    public void setGender(Integer gender) {
-        this.gender = gender;
-    }
-
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getIntro() {
-        return intro;
-    }
-
-    public void setIntro(String intro) {
-        this.intro = intro;
-    }
-
-    public Timestamp getCreatedTime() {
-        return createdTime;
-    }
-
-    public void setCreatedTime(Timestamp createdTime) {
-        this.createdTime = createdTime;
-    }
-
-    public String getImg1() {
-        return img1;
-    }
-
-    public void setImg1(String img1) {
-        this.img1 = img1;
-    }
-
-    public String getImg2() {
-        return img2;
-    }
-
-    public void setImg2(String img2) {
-        this.img2 = img2;
-    }
-
-    public String getImg3() {
-        return img3;
-    }
-
-    public void setImg3(String img3) {
-        this.img3 = img3;
-    }
-
-    public String getImg4() {
-        return img4;
-    }
-
-    public void setImg4(String img4) {
-        this.img4 = img4;
-    }
-
-    public String getImg5() {
-        return img5;
-    }
-
-    public void setImg5(String img5) {
-        this.img5 = img5;
-    }
-
-    public String getInterests() {
-        return interests;
-    }
-
-    public void setInterests(String interests) {
-        this.interests = interests;
-    }
-
-    public String getPersonality() {
-        return personality;
-    }
-
-    public void setPersonality(String personality) {
-        this.personality = personality;
-    }
-
-    public Timestamp getUpdatedTime() {
-        return updatedTime;
-    }
-
-    public void setUpdatedTime(Timestamp updatedTime) {
-        this.updatedTime = updatedTime;
-    }
-
-    public Integer getUserStatus() {
-        return userStatus;
-    }
-
-    public void setUserStatus(Integer userStatus) {
-        this.userStatus = userStatus;
-    }
-
-    public Boolean getPostStatus() {
-        return postStatus;
-    }
-
-    public void setPostStatus(Boolean postStatus) {
-        this.postStatus = postStatus;
-    }
-
-    public Boolean getAtAcStatus() {
-        return atAcStatus;
-    }
-
-    public void setAtAcStatus(Boolean atAcStatus) {
-        this.atAcStatus = atAcStatus;
-    }
-
-    public Boolean getSellStatus() {
-        return sellStatus;
-    }
-
-    public void setSellStatus(Boolean sellStatus) {
-        this.sellStatus = sellStatus;
-    }
+//    public Integer getUserId() {
+//        return userId;
+//    }
+//
+//    public void setUserId(Integer userId) {
+//        this.userId = userId;
+//    }
+//
+//    public String getUsername() {
+//        return username;
+//    }
+//
+//    public void setUsername(String username) {
+//        this.username = username;
+//    }
+//
+//    public String getEmail() {
+//        return email;
+//    }
+//
+//    public void setEmail(String email) {
+//        this.email = email;
+//    }
+//
+//    public String getPwd() {
+//        return pwd;
+//    }
+//
+//    public void setPwd(String pwd) {
+//        this.pwd = pwd;
+//    }
+//
+//    public Integer getGender() {
+//        return gender;
+//    }
+//
+//    public void setGender(Integer gender) {
+//        this.gender = gender;
+//    }
+//
+//    public Date getBirthday() {
+//        return birthday;
+//    }
+//
+//    public void setBirthday(Date birthday) {
+//        this.birthday = birthday;
+//    }
+//
+//    public String getLocation() {
+//        return location;
+//    }
+//
+//    public void setLocation(String location) {
+//        this.location = location;
+//    }
+//
+//    public String getIntro() {
+//        return intro;
+//    }
+//
+//    public void setIntro(String intro) {
+//        this.intro = intro;
+//    }
+//
+//    public Timestamp getCreatedTime() {
+//        return createdTime;
+//    }
+//
+//    public void setCreatedTime(Timestamp createdTime) {
+//        this.createdTime = createdTime;
+//    }
+//
+//    public String getImg1() {
+//        return img1;
+//    }
+//
+//    public void setImg1(String img1) {
+//        this.img1 = img1;
+//    }
+//
+//    public String getImg2() {
+//        return img2;
+//    }
+//
+//    public void setImg2(String img2) {
+//        this.img2 = img2;
+//    }
+//
+//    public String getImg3() {
+//        return img3;
+//    }
+//
+//    public void setImg3(String img3) {
+//        this.img3 = img3;
+//    }
+//
+//    public String getImg4() {
+//        return img4;
+//    }
+//
+//    public void setImg4(String img4) {
+//        this.img4 = img4;
+//    }
+//
+//    public String getImg5() {
+//        return img5;
+//    }
+//
+//    public void setImg5(String img5) {
+//        this.img5 = img5;
+//    }
+//
+//    public String getInterests() {
+//        return interests;
+//    }
+//
+//    public void setInterests(String interests) {
+//        this.interests = interests;
+//    }
+//
+//    public String getPersonality() {
+//        return personality;
+//    }
+//
+//    public void setPersonality(String personality) {
+//        this.personality = personality;
+//    }
+//
+//    public Timestamp getUpdatedTime() {
+//        return updatedTime;
+//    }
+//
+//    public void setUpdatedTime(Timestamp updatedTime) {
+//        this.updatedTime = updatedTime;
+//    }
+//
+//    public Integer getUserStatus() {
+//        return userStatus;
+//    }
+//
+//    public void setUserStatus(Integer userStatus) {
+//        this.userStatus = userStatus;
+//    }
+//
+//    public Boolean getPostStatus() {
+//        return postStatus;
+//    }
+//
+//    public void setPostStatus(Boolean postStatus) {
+//        this.postStatus = postStatus;
+//    }
+//
+//    public Boolean getAtAcStatus() {
+//        return atAcStatus;
+//    }
+//
+//    public void setAtAcStatus(Boolean atAcStatus) {
+//        this.atAcStatus = atAcStatus;
+//    }
+//
+//    public Boolean getSellStatus() {
+//        return sellStatus;
+//    }
+//
+//    public void setSellStatus(Boolean sellStatus) {
+//        this.sellStatus = sellStatus;
+//    }
 
     @Override
     public String toString() {

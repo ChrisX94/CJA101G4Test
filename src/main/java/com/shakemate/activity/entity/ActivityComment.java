@@ -1,7 +1,9 @@
-package com.shakemate.activity.vo;
+package com.shakemate.activity.entity;
 
 import java.sql.Timestamp;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.shakemate.user.model.Users;
 import jakarta.persistence.*;
 import lombok.*;
@@ -38,7 +40,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ActivityCommentVO {
+public class ActivityComment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 自動遞增
@@ -51,7 +53,7 @@ public class ActivityCommentVO {
     // 關聯到 Activity 實體
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "ACTIVITY_ID", nullable = false)
-    private ActivityVO activity;
+    private Activity activity;
 
 //    @Column(name = "USER_ID", nullable = false)
 //    private Integer userId;
@@ -67,7 +69,7 @@ public class ActivityCommentVO {
     // 父留言，多對一，nullable = true 表示可無父留言（null）
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PARENT_COMMENT_ID")
-    private ActivityCommentVO parentComment;
+    private ActivityComment parentComment;
 
 //    @Column(name = "PARENT_COMMENT_ID", nullable = true)
 //    private Integer parentCommentId;
@@ -78,5 +80,10 @@ public class ActivityCommentVO {
     @Column(name = "COMMENT_COUNT", nullable = false)
     @Builder.Default
     private Integer commentCount = 0;
+
+    // 一個留言有多個子留言
+    @JsonIgnore
+    @OneToMany(mappedBy = "parentComment", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<ActivityComment> activityComments;
 
 }

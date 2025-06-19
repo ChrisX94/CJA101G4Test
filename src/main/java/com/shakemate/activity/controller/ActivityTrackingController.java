@@ -2,8 +2,8 @@ package com.shakemate.activity.controller;
 
 import com.shakemate.activity.dto.ActivityTrackingDTO;
 import com.shakemate.activity.repository.ActivityTrackingRepository;
-import com.shakemate.activity.vo.ActivityTrackingId;
-import com.shakemate.activity.vo.ActivityTrackingVO;
+import com.shakemate.activity.entity.id.ActivityTrackingId;
+import com.shakemate.activity.entity.ActivityTracking;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +22,7 @@ public class ActivityTrackingController {
 
     // 新增追蹤紀錄
     @PostMapping
-    public ResponseEntity<ActivityTrackingDTO> addTracking(@RequestBody ActivityTrackingVO tracking) {
+    public ResponseEntity<ActivityTrackingDTO> addTracking(@RequestBody ActivityTracking tracking) {
 
         System.out.println("addTracking...");
         ActivityTrackingId id = tracking.getId();
@@ -32,7 +32,7 @@ public class ActivityTrackingController {
         }
 
         tracking.setTrackingTime(new Timestamp(System.currentTimeMillis()));
-        ActivityTrackingVO saved = trackingRepo.save(tracking);
+        ActivityTracking saved = trackingRepo.save(tracking);
         ActivityTrackingDTO dto = new ActivityTrackingDTO();
         dto.setActivityId(saved.getActivity().getActivityId());
         dto.setUserId(saved.getUser().getUserId());
@@ -43,7 +43,7 @@ public class ActivityTrackingController {
 
     @GetMapping
     public List<ActivityTrackingDTO> getAllActivityTracking() {
-        List<ActivityTrackingVO> activityTracking = trackingRepo.findAll();
+        List<ActivityTracking> activityTracking = trackingRepo.findAll();
         return activityTracking.stream().map(actTr -> {
             ActivityTrackingDTO dto = new ActivityTrackingDTO();
             dto.setActivityId(actTr.getActivity().getActivityId());
@@ -57,9 +57,9 @@ public class ActivityTrackingController {
     // 查某會員的所有追蹤活動（狀態 0）
     @GetMapping("/user/{userId}")
     public List<ActivityTrackingDTO> getTrackingByUser(@PathVariable Integer userId) {
-        List<ActivityTrackingVO> list = trackingRepo.findByIdUserIdAndTrackingState(userId, (byte) 0);
+        List<ActivityTracking> list = trackingRepo.findByIdUserIdAndTrackingState(userId, (byte) 0);
         List<ActivityTrackingDTO> dtoList = new ArrayList<>();
-        for (ActivityTrackingVO vo : list) {
+        for (ActivityTracking vo : list) {
             ActivityTrackingDTO dto = new ActivityTrackingDTO();
             dto.setActivityId(vo.getId().getActivityId());
             dto.setUserId(vo.getId().getUserId());
@@ -73,9 +73,9 @@ public class ActivityTrackingController {
     //  查某活動被哪些人追蹤（狀態 0）
     @GetMapping("/activity/{activityId}")
     public List<ActivityTrackingDTO> getTrackingByActivity(@PathVariable Integer activityId) {
-        List<ActivityTrackingVO> list = trackingRepo.findByIdActivityIdAndTrackingState(activityId, (byte) 0);
+        List<ActivityTracking> list = trackingRepo.findByIdActivityIdAndTrackingState(activityId, (byte) 0);
         List<ActivityTrackingDTO> dtoList = new ArrayList<>();
-        for (ActivityTrackingVO vo : list) {
+        for (ActivityTracking vo : list) {
             ActivityTrackingDTO dto = new ActivityTrackingDTO();
             dto.setActivityId(vo.getId().getActivityId());
             dto.setUserId(vo.getId().getUserId());
@@ -92,15 +92,15 @@ public class ActivityTrackingController {
     @PatchMapping("/{userId}/{activityId}/untrack")
     public ResponseEntity<?> untrack(@PathVariable Integer userId, @PathVariable Integer activityId) {
         ActivityTrackingId id = new ActivityTrackingId(activityId, userId);
-        Optional<ActivityTrackingVO> trackingOpt = trackingRepo.findById(id);
+        Optional<ActivityTracking> trackingOpt = trackingRepo.findById(id);
 
         if (trackingOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
-        ActivityTrackingVO tracking = trackingOpt.get();
+        ActivityTracking tracking = trackingOpt.get();
         tracking.setTrackingState((byte) 1);
-        ActivityTrackingVO saved = trackingRepo.save(tracking);
+        ActivityTracking saved = trackingRepo.save(tracking);
         ActivityTrackingDTO dto = new ActivityTrackingDTO();
         dto.setActivityId(saved.getId().getActivityId());
         dto.setUserId(saved.getId().getUserId());

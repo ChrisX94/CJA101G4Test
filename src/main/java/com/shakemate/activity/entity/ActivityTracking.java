@@ -1,7 +1,8 @@
-package com.shakemate.activity.vo;
+package com.shakemate.activity.entity;
 
 import java.sql.Timestamp;
 
+import com.shakemate.activity.entity.id.ActivityTrackingId;
 import com.shakemate.user.model.Users;
 import jakarta.persistence.*;
 import lombok.*;
@@ -36,7 +37,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ActivityTrackingVO {
+public class ActivityTracking {
 
     @EmbeddedId
     private ActivityTrackingId id;
@@ -47,7 +48,7 @@ public class ActivityTrackingVO {
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("activityId")
     @JoinColumn(name = "ACTIVITY_ID", nullable = false)
-    private ActivityVO activity;
+    private Activity activity;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("userId")

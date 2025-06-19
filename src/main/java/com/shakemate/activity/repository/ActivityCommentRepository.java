@@ -1,7 +1,7 @@
 package com.shakemate.activity.repository;
 
-import com.shakemate.activity.vo.ActivityCommentVO;
+import com.shakemate.activity.entity.ActivityComment;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ActivityCommentRepository extends JpaRepository<ActivityCommentVO, Integer> {
+public interface ActivityCommentRepository extends JpaRepository<ActivityComment, Integer> {
 }

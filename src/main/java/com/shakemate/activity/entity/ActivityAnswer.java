@@ -1,4 +1,4 @@
-package com.shakemate.activity.vo;
+package com.shakemate.activity.entity;
 
 /**
  * 表格名稱：活動回答 (ACTIVITY_ANSWERS)
@@ -24,7 +24,7 @@ package com.shakemate.activity.vo;
  */
 
 
-public class ActivityAnswerVO {
+public class ActivityAnswer {
 
     private Integer answerId;
     private Integer activityId;
