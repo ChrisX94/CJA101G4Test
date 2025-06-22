@@ -1,5 +1,6 @@
 package com.shakemate.activity.entity;
 
+import com.shakemate.adm.model.AdmVO;
 import com.shakemate.user.model.Users;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -46,8 +47,9 @@ import java.sql.Timestamp;
  */
 
 @Entity
-@Table(name = "activity_reports")
-@Data
+@Table(name = "ACTIVITY_REPORTS")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -55,16 +57,18 @@ public class ActivityReport {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "RP_USER_ID")
-    private Integer rpUserId;
+    @Column(name = "RP_USER_ID", nullable = false)
+    private Integer rpId;
 
-    @NotNull
-    @Column(name = "USER_ID", insertable = false, updatable = false, nullable = false)
-    private Integer userId;
+//    private Integer userId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "USER_ID", nullable = false)
+    private Users user;
 
-    @NotNull
-    @Column(name = "ACTIVITY_ID", insertable = false, updatable = false, nullable = false)
-    private Integer activityId;
+//    private Integer activityId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "ACTIVITY_ID", nullable = false)
+    private Activity activity;
 
     @NotNull
     @Column(name = "RP_REASON", nullable = false)
@@ -83,9 +87,10 @@ public class ActivityReport {
     @Column(name = "RP_TIME", nullable = false)
     private Timestamp rpTime;
 
-    @NotNull
-    @Column(name = "ADM_ID", insertable = false, updatable = false, nullable = false)
-    private Integer admId;
+//    private Integer admId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "ADM_ID", nullable = false)
+    private AdmVO adm;
 
     @Column(name = "RP_DONE_TIME")
     private Timestamp rpDoneTime;
@@ -95,21 +100,8 @@ public class ActivityReport {
     private Byte rpStatus; // 0: 未處理, 1: 通過, 2: 不通過
 
     @Size(max = 800)
-    @Column(name = "RP_NOTE", nullable = false, length = 800)
+    @Column(name = "RP_NOTE", length = 800)
     private String rpNote;
 
-    // ----- 關聯關係 -----
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USER_ID")
-    private Users user;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ACTIVITY_ID")
-    private Activity activity;
-
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "ADM_ID")
-//    private AdminVO admin;
 
 }

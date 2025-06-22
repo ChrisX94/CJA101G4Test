@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.stream.Collectors;
 
+// base package
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 

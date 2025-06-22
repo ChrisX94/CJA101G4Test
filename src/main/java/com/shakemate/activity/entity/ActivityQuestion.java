@@ -36,10 +36,6 @@ import lombok.*;
 @Builder
 public class ActivityQuestion {
 
-    @ManyToOne
-    @JoinColumn(name = "ACTIVITY_ID", nullable = false)
-    private Activity activity;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "QUESTION_ID")
@@ -48,6 +44,10 @@ public class ActivityQuestion {
 //    @NotNull
 //    @Column(name = "ACTIVITY_ID", nullable = false)
 //    private Integer activityId;
+
+    @ManyToOne
+    @JoinColumn(name = "ACTIVITY_ID", nullable = false)
+    private Activity activity;
 
     @NotNull
     @Size(min = 1, max = 255)

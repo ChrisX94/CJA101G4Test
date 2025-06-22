@@ -9,7 +9,6 @@ import java.util.List;
 @Repository
 public interface ActivityQuestionRepository  extends JpaRepository<ActivityQuestion, Integer> {
 
-    List<ActivityQuestion> findByActivity_ActivityId(Integer activityId);
 
 
 }

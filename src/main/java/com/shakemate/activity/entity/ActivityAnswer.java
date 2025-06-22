@@ -1,5 +1,9 @@
 package com.shakemate.activity.entity;
 
+import com.shakemate.user.model.Users;
+import jakarta.persistence.*;
+import lombok.*;
+
 /**
  * 表格名稱：活動回答 (ACTIVITY_ANSWERS)
  *
@@ -23,13 +27,37 @@ package com.shakemate.activity.entity;
  * ------------------------------------------------------------------------------
  */
 
-
+@Entity
+@Table(name = "ACTIVITY_ANSWERS")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ActivityAnswer {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ANSWER_ID", nullable = false)
     private Integer answerId;
-    private Integer activityId;
-    private Integer questionId;
-    private Integer userId;
+
+
+//    private Integer activityId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "ACTIVITY_ID", nullable = false)
+    private Activity activity;
+
+//    private Integer questionId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "QUESTION_ID", nullable = false)
+    private ActivityQuestion activityQuestion;
+
+//    private Integer userId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "USER_ID", nullable = false)
+    private Users user;
+
+    @Column(name = "ANSWER_TEXT", nullable = false, length = 500)
     private String answerText;
 
 }
