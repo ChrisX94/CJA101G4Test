@@ -3,6 +3,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Embeddable
 @Data
@@ -17,4 +18,15 @@ public class ActivityTrackingId implements Serializable {
     @Column(name = "USER_ID")
     private Integer userId;
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        ActivityTrackingId that = (ActivityTrackingId) o;
+        return Objects.equals(activityId, that.activityId) && Objects.equals(userId, that.userId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(activityId, userId);
+    }
 }
