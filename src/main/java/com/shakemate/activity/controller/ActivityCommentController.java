@@ -4,6 +4,7 @@ import com.shakemate.activity.common.ApiResponse;
 import com.shakemate.activity.dto.ActivityCommentCreateDTO;
 import com.shakemate.activity.dto.ActivityCommentDTO;
 import com.shakemate.activity.dto.ActivityCommentUpdateDTO;
+import com.shakemate.activity.mapper.ActivityCommentMapper;
 import com.shakemate.activity.repository.ActivityCommentRepository;
 import com.shakemate.activity.repository.ActivityRepository;
 import com.shakemate.activity.entity.ActivityComment;
@@ -14,6 +15,7 @@ import com.shakemate.user.repository.UserRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +28,7 @@ import java.util.Optional;
 public class ActivityCommentController {
 
     private final ActivityCommentService activityCommentService;
+    private final ActivityCommentMapper activityCommentMapper;
 
     @GetMapping("/{id}")
     public ApiResponse<ActivityCommentDTO> getActivityComment(@PathVariable Integer id) {
@@ -57,4 +60,8 @@ public class ActivityCommentController {
         activityCommentService.delete(id);
         return ApiResponse.success(null);
     }
+
+
+
+
 }

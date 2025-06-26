@@ -1,6 +1,8 @@
 package com.shakemate.activity.service;
 
 import com.shakemate.activity.dto.*;
+import com.shakemate.activity.entity.ActivityComment;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -11,5 +13,6 @@ public interface ActivityCommentService {
     ActivityCommentDTO create(ActivityCommentCreateDTO createDTO);
     ActivityCommentDTO update(Integer id, ActivityCommentUpdateDTO updateDTO);
     void delete(Integer id);
+
 
 }

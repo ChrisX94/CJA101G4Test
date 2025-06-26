@@ -1,12 +1,18 @@
 package com.shakemate.activity.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.shakemate.activity.entity.Activity;
 import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ActivityDTO {
 
@@ -71,5 +77,7 @@ public class ActivityDTO {
     private Integer commentCount;
 
     private Integer reportCount;
+
+
 
 }

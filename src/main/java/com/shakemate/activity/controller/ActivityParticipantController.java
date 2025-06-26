@@ -12,6 +12,7 @@ import com.shakemate.activity.service.ActivityParticipantService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -71,5 +72,42 @@ public class ActivityParticipantController {
         participantService.deleteActivityParticipant(id);
         return ApiResponse.success(null);
     }
+
+
+    // 查看所有申請者
+    @GetMapping("/applicants/{activityId}")
+    public Page<ActivityParticipantDTO> getApplicants(
+            @PathVariable Integer activityId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return participantService.getApplicants(activityId, page, size);
+    }
+
+    // 查看所有已加入者
+    @GetMapping("/accepted/{activityId}")
+    public Page<ActivityParticipantDTO> getAcceptedMembers(
+            @PathVariable Integer activityId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return participantService.getAcceptedMembers(activityId, page, size);
+    }
+
+
+    // 查看活動評語
+    @GetMapping("/reviews/{activityId}")
+    public Page<ActivityParticipantDTO> getActivityReviews(
+            @PathVariable Integer activityId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return participantService.getActivityReviews(activityId, page, size);
+    }
+
+    // 查看活動平均星星數
+    @GetMapping("/rating/avg/{activityId}")
+    public Double getAverageRating(@PathVariable Integer activityId) {
+        return participantService.getAverageRating(activityId);
+    }
+
+
 
 }

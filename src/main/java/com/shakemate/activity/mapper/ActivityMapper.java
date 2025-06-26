@@ -1,5 +1,6 @@
 package com.shakemate.activity.mapper;
 
+import com.shakemate.activity.dto.ActivityCardDTO;
 import com.shakemate.activity.dto.ActivityCreateDTO;
 import com.shakemate.activity.dto.ActivityDTO;
 import com.shakemate.activity.dto.ActivityUpdateDTO;
@@ -32,4 +33,6 @@ public interface ActivityMapper {
     void updateEntityFromDto(ActivityUpdateDTO updateDTO, @MappingTarget Activity entity);
 
 
+    // CardDTO
+    ActivityCardDTO toCardDTO(Activity activity);
 }

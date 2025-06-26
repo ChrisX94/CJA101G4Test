@@ -1,10 +1,12 @@
 package com.shakemate.activity.service.impl;
 
+import com.shakemate.activity.common.ActivityStatusUtil;
 import com.shakemate.activity.common.ApiResponse;
 import com.shakemate.activity.dto.*;
 import com.shakemate.activity.entity.Activity;
 import com.shakemate.activity.entity.ActivityParticipant;
 import com.shakemate.activity.entity.id.ActivityParticipantId;
+import com.shakemate.activity.mapper.ActivityMapper;
 import com.shakemate.activity.mapper.ActivityParticipantMapper;
 import com.shakemate.activity.repository.ActivityParticipantRepository;
 import com.shakemate.activity.repository.ActivityRepository;
@@ -15,6 +17,10 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,6 +37,7 @@ public class ActivityParticipantServiceImpl implements ActivityParticipantServic
     private final UserRepository usersRepository;
     private final ActivityRepository activityRepository;
     private final ActivityParticipantMapper mapper;
+    private final ActivityMapper activityMapper;
 
 
     @Override
@@ -98,4 +105,39 @@ public class ActivityParticipantServiceImpl implements ActivityParticipantServic
         }
         participantRepository.deleteById(id);
     }
+
+    @Override
+    public Page<ActivityParticipantDTO> getApplicants(Integer activityId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<ActivityParticipant> pageResult = participantRepository.findAllApplicantsByActivityId(activityId, pageable);
+        return pageResult.map(mapper::toDTO);
+    }
+
+    @Override
+    public Page<ActivityParticipantDTO> getAcceptedMembers(Integer activityId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<ActivityParticipant> pageResult = participantRepository.findAllAcceptedByActivityId(activityId, pageable);
+        return pageResult.map(mapper::toDTO);
+    }
+
+    @Override
+    public Page<ActivityParticipantDTO> getActivityReviews(Integer activityId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<ActivityParticipant> pageResult = participantRepository.findAllReviewsByActivityId(activityId, pageable);
+        return pageResult.map(mapper::toDTO);
+    }
+
+    public Double getAverageRating(Integer activityId) {
+        return participantRepository.findAverageRatingByActivityId(activityId);
+    }
+
+
+
+
+
+
+
+
+
+
 }
