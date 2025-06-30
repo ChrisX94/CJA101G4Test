@@ -1,9 +1,8 @@
 package com.shakemate.activity.service;
 
-import com.shakemate.activity.dto.ActivityTrackingCreateDTO;
+import com.shakemate.activity.dto.request.ActivityTrackingCreateDTO;
 import com.shakemate.activity.dto.ActivityTrackingDTO;
-import com.shakemate.activity.dto.ActivityTrackingUpdateDTO;
-import com.shakemate.activity.entity.ActivityTracking;
+import com.shakemate.activity.dto.request.ActivityTrackingUpdateDTO;
 import com.shakemate.activity.entity.id.ActivityTrackingId;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.shakemate.activity.dto;
+package com.shakemate.activity.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotBlank;
@@ -25,7 +25,7 @@ public class ActivityCreateDTO {
 
     private String imageUrl;
 
-    @NotBlank(message = "活動地點不可為空")
+
     private String location;
 
     @NotNull(message = "活動狀態不可為空")

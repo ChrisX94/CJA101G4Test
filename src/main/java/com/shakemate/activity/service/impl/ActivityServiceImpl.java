@@ -2,8 +2,13 @@ package com.shakemate.activity.service.impl;
 
 import com.shakemate.activity.common.ActivityStatusUtil;
 import com.shakemate.activity.dto.*;
+import com.shakemate.activity.dto.request.ActivityCreateDTO;
+import com.shakemate.activity.dto.request.ActivityUpdateDTO;
+import com.shakemate.activity.dto.response.ActivityCardDTO;
+import com.shakemate.activity.dto.response.PostResponse;
 import com.shakemate.activity.entity.Activity;
 import com.shakemate.activity.entity.ActivityParticipant;
+import com.shakemate.activity.entity.id.ActivityParticipantId;
 import com.shakemate.activity.mapper.ActivityCardMapper;
 import com.shakemate.activity.mapper.ActivityMapper;
 import com.shakemate.activity.repository.ActivityParticipantRepository;
@@ -13,15 +18,13 @@ import com.shakemate.user.model.Users;
 import com.shakemate.user.repository.UserRepository;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -96,6 +99,189 @@ public class ActivityServiceImpl implements ActivityService {
         activityRepository.deleteById(id);
     }
 
+
+    @Override
+    public PostResponse getOnePost(Integer postId, Integer userId) {
+        Activity activity = activityRepository.findById(postId)
+                .orElseThrow(() -> new EntityNotFoundException("找不到該活動"));
+
+        PostResponse response = new PostResponse();
+
+
+        Integer activityId = activity.getActivityId();
+        response.setActivityId(activityId);
+
+        // 主辦人資訊
+        Users host = activity.getUser();
+        response.setHostId(host.getUserId());
+        response.setHostName(host.getUsername());
+
+        String hostEmail = host.getEmail();
+        String accName = "User";
+        if (hostEmail != null && hostEmail.contains("@")) {
+            accName =  hostEmail.substring(0, hostEmail.indexOf("@"));
+        } else {
+            accName = "User";
+        }
+
+        response.setHostAccName(accName);
+        response.setHostImgUrl(host.getImg1());
+        response.setHostIntro(host.getIntro());
+
+        // 活動資訊
+        response.setTitle(activity.getTitle());
+        response.setImageUrl(activity.getImageUrl());
+        response.setLocation(activity.getLocation());
+        response.setCreatedTime(activity.getCreatedTime());
+        response.setContent(activity.getContent());
+        response.setCommentCount(activity.getCommentCount());
+
+        Timestamp regStartTime = activity.getRegStartTime();
+        Timestamp regEndTime = activity.getRegEndTime();
+        Timestamp activStartTime = activity.getActivStartTime();
+        Timestamp activEndTime = activity.getActivEndTime();
+
+        // 活動當前狀態判斷
+        Byte statusCode;
+
+        if(activity.getActivityStatus() != 3) {
+            Instant now = Instant.now();
+
+            if (now.isBefore(regStartTime.toInstant())) {
+                statusCode = 0; // 報名尚未開始
+            } else if (!now.isBefore(regStartTime.toInstant()) && now.isBefore(regEndTime.toInstant())) {
+                statusCode =  1; // 報名已開始
+            } else if (!now.isBefore(regEndTime.toInstant()) && now.isBefore(activStartTime.toInstant())) {
+                statusCode =  2; // 報名已結束
+            } else if (!now.isBefore(activStartTime.toInstant()) && now.isBefore(activEndTime.toInstant())) {
+                statusCode =  3; // 活動已開始
+            } else {
+                statusCode =  4; // 活動已結束
+            }
+        } else {
+            statusCode = 5;
+        }
+
+        String statusLabel = switch (statusCode) {
+            case 0 -> "報名未開始";
+            case 1 -> "報名已開始";
+            case 2 -> "報名已結束";
+            case 3 -> "活動已開始";
+            case 4 -> "活動已結束";
+            case 5 -> "活動已取消/下架";
+            default -> "未知狀態";
+        };
+
+        response.setActivityStatusCode(statusCode);
+        response.setActivityStatusLabel(statusLabel);
+
+
+        // 已報名人數
+        Integer signupCount = activity.getSignupCount();
+        response.setSignupCount(signupCount);
+
+        Integer minPeople = activity.getMinPeople();
+        Integer maxPeople = activity.getMaxPeople();
+
+        response.setMinPeople(minPeople);
+        response.setMaxPeople(maxPeople);
+
+        Integer remainingSlots = maxPeople - signupCount;
+        Integer peopleToFormGroup = minPeople - signupCount;
+        Integer safePeopleToFormGroup = Math.max(0, peopleToFormGroup);
+
+        response.setRemainingSlots(remainingSlots);
+        response.setPeopleToFormGroup(peopleToFormGroup);
+        response.setSafePeopleToFormGroup(safePeopleToFormGroup);
+
+
+        // 使用者參與活動情況（0, 未參加 1, 申請中 2, 已參加）
+        Byte pStatusCode;
+
+        ActivityParticipantId findId = new ActivityParticipantId(userId, activityId);
+
+        Optional<ActivityParticipant> participantEntity = activityParticipantRepository.findById(findId);
+        if (participantEntity.isPresent()) {
+            // 有值，可以用 entity.get() 拿到 ActivityParticipant
+            ActivityParticipant ap = participantEntity.get();
+            // 進一步操作
+            Byte apCode = ap.getParStatus();
+            //  0:申請中（預設）
+            //  1:已取消申請
+            //  2:已加入
+            //  3:已退出
+            if(apCode == 0) {
+                pStatusCode = 1;
+            } else if(apCode == 1) {
+                pStatusCode = 0;
+            } else if(apCode == 2) {
+                pStatusCode = 2;
+            } else if(apCode == 3) {
+                pStatusCode = 0;
+            } else {
+                pStatusCode = 0;
+            }
+
+        } else {
+            // Optional 是空的，沒找到資料
+            pStatusCode = 0;
+        }
+
+        String pStatusLabel = switch (pStatusCode) {
+            case 0 -> "未參加";
+            case 1 -> "申請中";
+            case 2 -> "已參加";
+            default -> "未知狀態";
+        };
+
+        response.setParticipantStatusCode(pStatusCode);
+        response.setParticipantStatusLabel(pStatusLabel);
+
+        return response;
+
+
+    }
+
+
+    @Override
+    public Page<PostResponse> getWallPost(Integer userId, int page, int size, String sortBy, String sortDirection) {
+
+        List<Activity> list = activityRepository.findAll();
+        List<PostResponse> responseList = new ArrayList<>();
+
+        for (Activity activity : list) {
+
+            responseList.add(getOnePost(activity.getActivityId(), userId));
+        }
+
+        // 排序條件選擇
+        Comparator<PostResponse> comparator = switch (sortBy) {
+            case "createdTime" -> Comparator.comparing(PostResponse::getCreatedTime, Comparator.nullsLast(Comparator.naturalOrder()));
+            // 可再加其他欄位
+            default -> Comparator.comparing(PostResponse::getCreatedTime, Comparator.nullsLast(Comparator.naturalOrder()));
+        };
+
+        // 判斷是否為降冪
+        if ("desc".equalsIgnoreCase(sortDirection)) {
+            comparator = comparator.reversed();
+        }
+
+        // 排序後再分頁
+        responseList.sort(comparator);
+        int start = page * size;
+        int end = Math.min(start + size, responseList.size());
+        List<PostResponse> pagedList = responseList.subList(start, end);
+
+        return new PageImpl<>(pagedList, PageRequest.of(page, size), responseList.size());
+
+    }
+
+
+
+
+
+
+    // 測試用 --------------------------------------------------------------
     @Override
     public Page<Activity> getFilteredActivities(int userAge, int userGender, int page, int size, String sort) {
         // 若是 spots 則用 custom query，不走 sortSpec
@@ -202,11 +388,25 @@ public class ActivityServiceImpl implements ActivityService {
         );
     }
 
+    public Page<ActivityCardDTO> getVisibleActivitiesForUser(Integer userId, Pageable pageable) {
+        // 1. 查詢使用者
+        Users user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("找不到該使用者"));
+        // 2. 計算年齡（假設 birthday 是 java.util.Date）
+        java.util.Date birthday = user.getBirthday();
+        java.time.LocalDate birthDate;
+        if (birthday instanceof java.sql.Date) {
+            birthDate = ((java.sql.Date) birthday).toLocalDate();
+        } else {
+            birthDate = birthday.toInstant()
+                    .atZone(java.time.ZoneId.systemDefault())
+                    .toLocalDate();
+        }
+        int userAge = java.time.Period.between(birthDate, java.time.LocalDate.now()).getYears();
+        // 3. 取得性別
+        int userGender = user.getGender(); // 0=男, 1=女
 
-
-    public Page<ActivityCardDTO> getVisibleActivitiesForUser(
-            Integer userId, int userAge, int userGender, Pageable pageable) {
-
+        // 4. 查詢活動
         Page<Activity> activityPage = activityRepository.findByUserAgeGender(userAge, userGender, pageable);
 
         List<Integer> activityIds = activityPage.getContent().stream()

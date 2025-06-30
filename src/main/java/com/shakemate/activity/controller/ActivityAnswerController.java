@@ -1,13 +1,10 @@
 package com.shakemate.activity.controller;
 
 import com.shakemate.activity.common.ApiResponse;
-import com.shakemate.activity.dto.ActivityAnswerCreateDTO;
+import com.shakemate.activity.dto.request.ActivityAnswerCreateDTO;
 import com.shakemate.activity.dto.ActivityAnswerDTO;
-import com.shakemate.activity.dto.ActivityAnswerUpdateDTO;
-import com.shakemate.activity.entity.Activity;
-import com.shakemate.activity.entity.ActivityAnswer;
+import com.shakemate.activity.dto.request.ActivityAnswerUpdateDTO;
 import com.shakemate.activity.service.ActivityAnswerService;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

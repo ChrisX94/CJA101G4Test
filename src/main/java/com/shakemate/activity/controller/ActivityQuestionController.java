@@ -1,22 +1,16 @@
 package com.shakemate.activity.controller;
 
 import com.shakemate.activity.common.ApiResponse;
-import com.shakemate.activity.dto.ActivityQuestionCreateDTO;
+import com.shakemate.activity.dto.request.ActivityQuestionCreateDTO;
 import com.shakemate.activity.dto.ActivityQuestionDTO;
-import com.shakemate.activity.dto.ActivityQuestionUpdateDTO;
-import com.shakemate.activity.repository.ActivityRepository;
-import com.shakemate.activity.entity.ActivityQuestion;
-import com.shakemate.activity.repository.ActivityQuestionRepository;
+import com.shakemate.activity.dto.request.ActivityQuestionUpdateDTO;
 
-import com.shakemate.activity.entity.Activity;
 import com.shakemate.activity.service.ActivityQuestionService;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.validation.Valid;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+
 import lombok.*;
 
 @RestController

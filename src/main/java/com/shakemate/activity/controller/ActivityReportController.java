@@ -1,12 +1,10 @@
 package com.shakemate.activity.controller;
 
 import com.shakemate.activity.common.ApiResponse;
-import com.shakemate.activity.dto.ActivityReportCreateDTO;
+import com.shakemate.activity.dto.request.ActivityReportCreateDTO;
 import com.shakemate.activity.dto.ActivityReportDTO;
-import com.shakemate.activity.dto.ActivityReportUpdateDTO;
-import com.shakemate.activity.entity.ActivityReport;
+import com.shakemate.activity.dto.request.ActivityReportUpdateDTO;
 import com.shakemate.activity.service.ActivityReportService;
-import com.shakemate.activity.service.impl.ActivityReportServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

@@ -1,8 +1,8 @@
 package com.shakemate.activity.service.impl;
 
-import com.shakemate.activity.dto.ActivityAnswerCreateDTO;
+import com.shakemate.activity.dto.request.ActivityAnswerCreateDTO;
 import com.shakemate.activity.dto.ActivityAnswerDTO;
-import com.shakemate.activity.dto.ActivityAnswerUpdateDTO;
+import com.shakemate.activity.dto.request.ActivityAnswerUpdateDTO;
 import com.shakemate.activity.entity.Activity;
 import com.shakemate.activity.entity.ActivityAnswer;
 import com.shakemate.activity.entity.ActivityQuestion;

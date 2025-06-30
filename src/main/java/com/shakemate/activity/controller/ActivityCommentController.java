@@ -1,26 +1,16 @@
 package com.shakemate.activity.controller;
 
 import com.shakemate.activity.common.ApiResponse;
-import com.shakemate.activity.dto.ActivityCommentCreateDTO;
+import com.shakemate.activity.dto.request.ActivityCommentCreateDTO;
 import com.shakemate.activity.dto.ActivityCommentDTO;
-import com.shakemate.activity.dto.ActivityCommentUpdateDTO;
+import com.shakemate.activity.dto.request.ActivityCommentUpdateDTO;
 import com.shakemate.activity.mapper.ActivityCommentMapper;
-import com.shakemate.activity.repository.ActivityCommentRepository;
-import com.shakemate.activity.repository.ActivityRepository;
-import com.shakemate.activity.entity.ActivityComment;
-import com.shakemate.activity.entity.Activity;
 import com.shakemate.activity.service.ActivityCommentService;
-import com.shakemate.user.model.Users;
-import com.shakemate.user.repository.UserRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/activity-comments")

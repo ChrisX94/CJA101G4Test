@@ -1,8 +1,8 @@
 package com.shakemate.activity.mapper;
 
-import com.shakemate.activity.dto.ActivityCommentCreateDTO;
+import com.shakemate.activity.dto.request.ActivityCommentCreateDTO;
 import com.shakemate.activity.dto.ActivityCommentDTO;
-import com.shakemate.activity.dto.ActivityCommentUpdateDTO;
+import com.shakemate.activity.dto.request.ActivityCommentUpdateDTO;
 import com.shakemate.activity.entity.ActivityComment;
 import org.mapstruct.*;
 

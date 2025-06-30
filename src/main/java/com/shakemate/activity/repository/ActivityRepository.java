@@ -1,6 +1,5 @@
 package com.shakemate.activity.repository;
 
-import com.shakemate.activity.dto.ActivityWithStatusDTO;
 import com.shakemate.activity.entity.Activity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

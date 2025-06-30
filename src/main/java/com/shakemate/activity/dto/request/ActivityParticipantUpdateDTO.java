@@ -1,4 +1,4 @@
-package com.shakemate.activity.dto;
+package com.shakemate.activity.dto.request;
 
 import lombok.Data;
 

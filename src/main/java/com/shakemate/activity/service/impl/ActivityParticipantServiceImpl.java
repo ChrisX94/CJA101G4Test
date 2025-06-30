@@ -1,8 +1,8 @@
 package com.shakemate.activity.service.impl;
 
-import com.shakemate.activity.common.ActivityStatusUtil;
-import com.shakemate.activity.common.ApiResponse;
 import com.shakemate.activity.dto.*;
+import com.shakemate.activity.dto.request.ActivityParticipantCreateDTO;
+import com.shakemate.activity.dto.request.ActivityParticipantUpdateDTO;
 import com.shakemate.activity.entity.Activity;
 import com.shakemate.activity.entity.ActivityParticipant;
 import com.shakemate.activity.entity.id.ActivityParticipantId;
@@ -15,18 +15,13 @@ import com.shakemate.user.model.Users;
 import com.shakemate.user.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional

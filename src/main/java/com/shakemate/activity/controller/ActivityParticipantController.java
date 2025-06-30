@@ -1,23 +1,17 @@
 package com.shakemate.activity.controller;
 
 import com.shakemate.activity.common.ApiResponse;
-import com.shakemate.activity.dto.ActivityDTO;
-import com.shakemate.activity.dto.ActivityParticipantCreateDTO;
+import com.shakemate.activity.dto.request.ActivityParticipantCreateDTO;
 import com.shakemate.activity.dto.ActivityParticipantDTO;
-import com.shakemate.activity.dto.ActivityParticipantUpdateDTO;
-import com.shakemate.activity.repository.ActivityParticipantRepository;
+import com.shakemate.activity.dto.request.ActivityParticipantUpdateDTO;
 import com.shakemate.activity.entity.id.ActivityParticipantId;
-import com.shakemate.activity.entity.ActivityParticipant;
 import com.shakemate.activity.service.ActivityParticipantService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/activity-participants")

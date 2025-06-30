@@ -1,8 +1,8 @@
 package com.shakemate.activity.mapper;
 
-import com.shakemate.activity.dto.ActivityAnswerCreateDTO;
+import com.shakemate.activity.dto.request.ActivityAnswerCreateDTO;
 import com.shakemate.activity.dto.ActivityAnswerDTO;
-import com.shakemate.activity.dto.ActivityAnswerUpdateDTO;
+import com.shakemate.activity.dto.request.ActivityAnswerUpdateDTO;
 import com.shakemate.activity.entity.ActivityAnswer;
 import org.mapstruct.*;
 

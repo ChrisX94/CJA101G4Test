@@ -1,5 +1,6 @@
-package com.shakemate.activity.dto;
+package com.shakemate.activity.dto.response;
 
+import com.shakemate.activity.dto.ActivityDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

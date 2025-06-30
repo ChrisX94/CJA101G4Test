@@ -1,16 +1,18 @@
 package com.shakemate.activity.controller;
 
-import com.shakemate.activity.dto.ActivityCardDTO;
-import com.shakemate.activity.dto.ActivityCreateDTO;
+import com.shakemate.activity.dto.response.ActivityCardDTO;
+import com.shakemate.activity.dto.request.ActivityCreateDTO;
 import com.shakemate.activity.dto.ActivityDTO;
-import com.shakemate.activity.dto.ActivityUpdateDTO;
+import com.shakemate.activity.dto.request.ActivityUpdateDTO;
+import com.shakemate.activity.dto.response.PostResponse;
+import com.shakemate.activity.dto.response.UserInfoResponse;
 import com.shakemate.activity.entity.Activity;
 import com.shakemate.activity.mapper.ActivityCardMapper;
 import com.shakemate.activity.service.ActivityService;
 import com.shakemate.activity.common.ApiResponse;
 import com.shakemate.user.model.Users;
 import com.shakemate.user.repository.UserRepository;
-import com.shakemate.user.service.UserService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -21,8 +23,6 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -69,6 +69,62 @@ public class ActivityController {
         activityService.deleteActivity(id);
         return ApiResponse.success(null);
     }
+
+    // 到時候放在user controller
+    @GetMapping("/current-user")
+    public ApiResponse<UserInfoResponse> getCurrentUserInfo(
+            @RequestParam Integer userId){
+        Users user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("找不到該使用者"));
+        UserInfoResponse userInfoResponse = new UserInfoResponse();
+        userInfoResponse.setUserId(user.getUserId());
+        userInfoResponse.setUserName(user.getUsername());
+
+        String email = user.getEmail();
+        String accName = "User";
+        if (email != null && email.contains("@")) {
+            accName =  email.substring(0, email.indexOf("@"));
+        } else {
+            accName = "User";
+        }
+        userInfoResponse.setUserAccName(accName);
+        userInfoResponse.setUserImgUrl(user.getImg1());
+        userInfoResponse.setUserIntro(user.getIntro());
+
+        return ApiResponse.success(userInfoResponse);
+
+    }
+
+    @GetMapping("/post")
+    public ApiResponse<PostResponse> getOnePost(
+            @RequestParam Integer postId,
+            @RequestParam Integer userId) {
+        PostResponse response = activityService.getOnePost(postId, userId);
+        return ApiResponse.success(response);
+    }
+
+
+    // 得到動態牆所需要資料
+    @GetMapping("/wall-post")
+    public ApiResponse<Page<PostResponse>> getWallPost(
+            @RequestParam Integer userId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size,
+            @RequestParam(defaultValue = "createdTime") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDirection) {
+
+        Page<PostResponse> responses = activityService.getWallPost(userId, page, size, sortBy, sortDirection);
+
+        return ApiResponse.success(responses);
+
+    }
+
+
+
+
+
+
+    // 測試用
 
     @GetMapping("/feed")
     public ApiResponse<Page<ActivityDTO>> getFeed(
@@ -164,11 +220,9 @@ public class ActivityController {
     @GetMapping("/wall")
     public ApiResponse<Page<ActivityCardDTO>> getActivityWall(
             @RequestParam Integer userId,
-            @RequestParam int userAge,
-            @RequestParam int userGender,
             Pageable pageable) {
 
-        Page<ActivityCardDTO> result = activityService.getVisibleActivitiesForUser(userId, userAge, userGender, pageable);
+        Page<ActivityCardDTO> result = activityService.getVisibleActivitiesForUser(userId, pageable);
         return ApiResponse.success(result);
     }
 

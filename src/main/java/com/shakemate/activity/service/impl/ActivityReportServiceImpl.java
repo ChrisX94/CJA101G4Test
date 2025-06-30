@@ -1,8 +1,8 @@
 package com.shakemate.activity.service.impl;
 
-import com.shakemate.activity.dto.ActivityReportCreateDTO;
+import com.shakemate.activity.dto.request.ActivityReportCreateDTO;
 import com.shakemate.activity.dto.ActivityReportDTO;
-import com.shakemate.activity.dto.ActivityReportUpdateDTO;
+import com.shakemate.activity.dto.request.ActivityReportUpdateDTO;
 import com.shakemate.activity.entity.Activity;
 import com.shakemate.activity.entity.ActivityReport;
 import com.shakemate.activity.mapper.ActivityReportMapper;

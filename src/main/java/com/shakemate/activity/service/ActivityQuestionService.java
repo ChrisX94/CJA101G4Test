@@ -1,9 +1,8 @@
 package com.shakemate.activity.service;
 
-import com.shakemate.activity.dto.ActivityQuestionCreateDTO;
+import com.shakemate.activity.dto.request.ActivityQuestionCreateDTO;
 import com.shakemate.activity.dto.ActivityQuestionDTO;
-import com.shakemate.activity.dto.ActivityQuestionUpdateDTO;
-import com.shakemate.activity.entity.ActivityQuestion;
+import com.shakemate.activity.dto.request.ActivityQuestionUpdateDTO;
 
 import java.util.List;
 

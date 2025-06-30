@@ -1,8 +1,8 @@
 package com.shakemate.activity.service;
 
 import com.shakemate.activity.dto.*;
-import com.shakemate.activity.entity.ActivityComment;
-import org.springframework.data.domain.Page;
+import com.shakemate.activity.dto.request.ActivityCommentCreateDTO;
+import com.shakemate.activity.dto.request.ActivityCommentUpdateDTO;
 
 import java.util.List;
 

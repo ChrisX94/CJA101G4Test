@@ -1,24 +1,16 @@
 package com.shakemate.activity.controller;
 
 import com.shakemate.activity.common.ApiResponse;
-import com.shakemate.activity.dto.ActivityTrackingCreateDTO;
+import com.shakemate.activity.dto.request.ActivityTrackingCreateDTO;
 import com.shakemate.activity.dto.ActivityTrackingDTO;
-import com.shakemate.activity.dto.ActivityTrackingUpdateDTO;
-import com.shakemate.activity.repository.ActivityTrackingRepository;
+import com.shakemate.activity.dto.request.ActivityTrackingUpdateDTO;
 import com.shakemate.activity.entity.id.ActivityTrackingId;
-import com.shakemate.activity.entity.ActivityTracking;
 import com.shakemate.activity.service.ActivityTrackingService;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/activity-tracking")

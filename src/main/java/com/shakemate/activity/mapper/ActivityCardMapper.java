@@ -1,6 +1,6 @@
 package com.shakemate.activity.mapper;
 
-import com.shakemate.activity.dto.ActivityCardDTO;
+import com.shakemate.activity.dto.response.ActivityCardDTO;
 import com.shakemate.activity.entity.Activity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
